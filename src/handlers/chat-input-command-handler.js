@@ -1,10 +1,10 @@
 const Discord = require('discord.js');
 
 /**
- * 
- * @param {Discord.CommandInteraction} interaction
+ *
+ * @param {Discord.ChatInputCommandInteraction} interaction
  */
-async function commandHandler(interaction) {
+async function chatInputCommandHandler(interaction) {
 	const { commandName } = interaction;
 
 	/** @type {Discord.Collection} */
@@ -20,4 +20,4 @@ async function commandHandler(interaction) {
 	await command.handler(interaction);
 }
 
-module.exports = commandHandler;
+module.exports = chatInputCommandHandler;

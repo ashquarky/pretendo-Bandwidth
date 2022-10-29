@@ -33,7 +33,7 @@ async function messageCreateHandler(message) {
 		} else {
 			await message.reply('Looks like the resulting message is too long :/');
 			return;
-		}		
+		}
 	}
 }
 

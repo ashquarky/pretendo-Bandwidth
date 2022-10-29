@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const { ContextMenuCommandBuilder } = require('@discordjs/builders');
 const { ApplicationCommandType } = require('discord-api-types/v10');
-const { showModal } = require('discord-modals');
 const { modal: reportUserModal } = require('../../modals/report-user');
 
 /**
@@ -33,7 +32,7 @@ async function reportUserHandler(interaction) {
 	reportUserModal.setCustomId(`${reportUserModal.customId}-${targetId}`);
 	reportUserModal.setTitle(`Reporting ${targetMember.user.tag}`);
 
-	showModal(reportUserModal, {
+	interaction.showModal(reportUserModal, {
 		client: interaction.client,
 		interaction: interaction
 	});
@@ -41,7 +40,7 @@ async function reportUserHandler(interaction) {
 
 const contextMenu = new ContextMenuCommandBuilder();
 
-contextMenu.setDefaultPermission(true);
+contextMenu.setDefaultMemberPermissions(Discord.PermissionFlagsBits.SendMessages);
 contextMenu.setName('Report User');
 contextMenu.setType(ApplicationCommandType.User);
 

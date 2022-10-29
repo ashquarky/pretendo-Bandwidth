@@ -1,28 +1,33 @@
 const Discord = require('discord.js');
-const db = require('../db');
-const { Modal, TextInputComponent, ModalSubmitInteraction } = require('discord-modals');
 const discordTranscripts = require('discord-html-transcripts');
+const db = require('../db');
 
-const reason = new TextInputComponent()
-	.setCustomId('reason')
-	.setLabel('Reason')
-	.setStyle('LONG')
-	.setRequired(true);
+const reason = new Discord.TextInputBuilder();
+reason.setCustomId('reason');
+reason.setLabel('Reason');
+reason.setStyle(Discord.TextInputStyle.Paragraph);
+reason.setRequired(true);
 
-const transcriptCount = new TextInputComponent()
-	.setCustomId('transcript-count')
-	.setLabel('Transcript')
-	.setStyle('SHORT')
-	.setPlaceholder('Number of messages to include. 0-100. Default 20');
+const transcriptCount = new Discord.TextInputBuilder();
+transcriptCount.setCustomId('transcript-count');
+transcriptCount.setLabel('Transcript');
+transcriptCount.setStyle(Discord.TextInputStyle.Short);
+transcriptCount.setPlaceholder('Number of messages to include. 0-100. Default 20');
 
-const reportUserModal = new Modal()
-	.setCustomId('report-user')
-	.setTitle('Reporting User')
-	.addComponents(reason, transcriptCount);
+const actionRow1 = new Discord.ActionRowBuilder();
+actionRow1.addComponents(reason);
+
+const actionRow2 = new Discord.ActionRowBuilder();
+actionRow2.addComponents(transcriptCount);
+
+const reportUserModal = new Discord.ModalBuilder();
+reportUserModal.setCustomId('report-user');
+reportUserModal.setTitle('Reporting User');
+reportUserModal.addComponents(actionRow1, actionRow2);
 
 /**
  *
- * @param {ModalSubmitInteraction} interaction
+ * @param {Discord.ModalSubmitInteraction} interaction
  */
 async function reportUserHandler(interaction) {
 	await interaction.deferReply({
@@ -34,8 +39,8 @@ async function reportUserHandler(interaction) {
 	const targetId = parts[2];
 	const targetMember = await interaction.guild.members.fetch(targetId);
 
-	const reason = interaction.getTextInputValue('reason').trim();
-	let transcriptCount = interaction.getTextInputValue('transcript-count')?.trim();
+	const reason = interaction.fields.getTextInputValue('reason').trim();
+	let transcriptCount = interaction.fields.getTextInputValue('transcript-count')?.trim();
 
 	if (transcriptCount === '' || isNaN(transcriptCount)) {
 		transcriptCount = 20;
@@ -50,7 +55,7 @@ async function reportUserHandler(interaction) {
 		throw new Error('Report failed to submit - channel not setup');
 	}
 
-	const reportEmbed = new Discord.MessageEmbed();
+	const reportEmbed = new Discord.EmbedBuilder();
 
 	reportEmbed.setColor(0xC0C0C0);
 	reportEmbed.setTitle('User Report');
@@ -122,8 +127,8 @@ async function reportUserHandler(interaction) {
 	transcriptButton.setStyle('LINK');
 	transcriptButton.setURL(message.attachments.first().url);
 
-	const row = new Discord.MessageActionRow();
-	row.addComponents([transcriptButton]);
+	const row = new Discord.ActionRowBuilder();
+	row.addComponents(transcriptButton);
 
 	await message.edit({
 		components: [row]
@@ -136,7 +141,7 @@ async function reportUserHandler(interaction) {
 }
 
 module.exports = {
-	name: reportUserModal.customId,
+	name: reportUserModal.data.custom_id,
 	modal: reportUserModal,
 	handler: reportUserHandler
 };

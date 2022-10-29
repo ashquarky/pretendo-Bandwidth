@@ -15,7 +15,7 @@ async function warnPiracyHandler(interaction) {
 		throw new Error('Report failed to submit - channel not setup');
 	}
 
-	const warnPiracyEmbed = new Discord.MessageEmbed();
+	const warnPiracyEmbed = new Discord.EmbedBuilder();
 	warnPiracyEmbed.setThumbnail('attachment://piracy.png');
 	warnPiracyEmbed.setTitle('Piracy Warning');
 	warnPiracyEmbed.setDescription('A user has reported this message as pertaining to piracy. Pretendo Network does not support piracy of any kind. Talking about piracy is prohinbited. This includes, but is not limited to:\n\n- Sharing game/firmware dumps\n- Sharing console SDK (software development kit) leaks/tools\n- Sharing tools used to acquire pirated content (cdn downloads, warez sites, etc)\n\n_This action has been logged. If you believe this to have been done unfairly please contact a staff member_');
@@ -39,7 +39,7 @@ async function warnPiracyHandler(interaction) {
 		]
 	});
 
-	const reportEmbed = new Discord.MessageEmbed();
+	const reportEmbed = new Discord.EmbedBuilder();
 
 	reportEmbed.setColor(0xC0C0C0);
 	reportEmbed.setTitle('User Report');
@@ -116,7 +116,7 @@ async function warnPiracyHandler(interaction) {
 
 const contextMenu = new ContextMenuCommandBuilder();
 
-contextMenu.setDefaultPermission(true);
+contextMenu.setDefaultMemberPermissions(Discord.PermissionFlagsBits.SendMessages);
 contextMenu.setName('Warn Piracy');
 contextMenu.setType(ApplicationCommandType.Message);
 

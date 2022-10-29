@@ -1,10 +1,10 @@
 const Discord = require('discord.js');
 const db = require('../db');
 
-const denyButton = new Discord.MessageButton();
+const denyButton = new Discord.ButtonBuilder();
 denyButton.setCustomId('mod-application-deny');
 denyButton.setLabel('Deny');
-denyButton.setStyle('DANGER');
+denyButton.setStyle(Discord.ButtonStyle.Danger);
 
 /**
  *
@@ -28,7 +28,7 @@ async function modApplicationAcceptHandler(interaction) {
 	}
 
 	const { message } = interaction;
-	const modApplicationEmbed = message.embeds[0];
+	const modApplicationEmbed = new Discord.EmbedBuilder(message.embeds[0].toJSON());
 	const rowOld = message.components[0];
 	const [acceptButtonOld, denyButtonOld] = rowOld.components;
 
@@ -36,11 +36,14 @@ async function modApplicationAcceptHandler(interaction) {
 	modApplicationEmbed.setImage('attachment://denied-banner.png');
 	modApplicationEmbed.setThumbnail('attachment://denied-icon.png');
 
-	acceptButtonOld.setDisabled();
-	denyButtonOld.setDisabled();
+	const acceptButtonNew = new Discord.ButtonBuilder(acceptButtonOld.toJSON());
+	const denyButtonNew = new Discord.ButtonBuilder(denyButtonOld.toJSON());
 
-	const row = new Discord.MessageActionRow();
-	row.addComponents([acceptButtonOld, denyButtonOld]);
+	acceptButtonNew.setDisabled();
+	denyButtonNew.setDisabled();
+
+	const row = new Discord.ActionRowBuilder();
+	row.addComponents(acceptButtonNew, denyButtonNew);
 
 	await message.edit({
 		embeds: [modApplicationEmbed],
@@ -58,7 +61,7 @@ async function modApplicationAcceptHandler(interaction) {
 }
 
 module.exports = {
-	name: denyButton.customId,
+	name: denyButton.data.custom_id,
 	button: denyButton,
 	handler: modApplicationAcceptHandler
 };

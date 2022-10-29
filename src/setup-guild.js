@@ -11,7 +11,7 @@ const rest = new REST({ version: '10' }).setToken(botToken);
  */
 async function setupGuild(guild) {
 	// do nothing if the bot does not have the correct permissions
-	if (!guild.me.permissions.has([Discord.Permissions.FLAGS.MANAGE_CHANNELS])) {
+	if (!guild.members.me.permissions.has([Discord.PermissionFlagsBits.ManageChannels])) {
 		console.log('Bot does not have permissions to set up in guild', guild.name);
 		return;
 	}
@@ -42,7 +42,7 @@ async function deployCommandsToGuild(guild) {
 	});
 
 
-	await rest.put(Routes.applicationGuildCommands(guild.me.id, guild.id), {
+	await rest.put(Routes.applicationGuildCommands(guild.members.me.id, guild.id), {
 		body: deploy,
 	});
 }

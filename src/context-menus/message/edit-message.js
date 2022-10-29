@@ -1,9 +1,6 @@
 const Discord = require('discord.js');
-const cloneDeep = require('lodash.clonedeep');
 const { ContextMenuCommandBuilder } = require('@discordjs/builders');
 const { ApplicationCommandType } = require('discord-api-types/v10');
-const { showModal, TextInputComponent } = require('discord-modals');
-const { modal: editMessageModal } = require('../../modals/edit-message');
 
 /**
  *
@@ -28,26 +25,33 @@ async function reportUserHandler(interaction) {
 		components: messageJSON.components || []
 	};
 
-	const messageIdInput = new TextInputComponent();
+	const messageIdInput = new Discord.TextInputBuilder();
 	messageIdInput.setCustomId('message-id');
-	messageIdInput.setStyle('SHORT');
 	messageIdInput.setLabel('Message ID (DO NOT CHANGE)');
-	messageIdInput.setDefaultValue(targetId);
+	messageIdInput.setStyle(Discord.TextInputStyle.Short);
+	messageIdInput.setValue(targetId);
 	messageIdInput.setRequired(true);
 
-	const payload = new TextInputComponent();
+	const payload = new Discord.TextInputBuilder();
 	payload.setCustomId('payload');
-	payload.setStyle('LONG');
+	payload.setStyle(Discord.TextInputStyle.Paragraph);
 	payload.setLabel('Message Payload');
 	payload.setPlaceholder('http://discohook.org & https://discord.com/developers/docs/resources/channel#message-object for help');
-	payload.setDefaultValue(JSON.stringify(messagePayload, null, 4));
+	payload.setValue(JSON.stringify(messagePayload, null, 4));
 	payload.setRequired(true);
 
-	const modal = cloneDeep(editMessageModal);
+	const row1 = new Discord.ActionRowBuilder();
+	row1.addComponents(messageIdInput);
 
-	modal.addComponents(messageIdInput, payload);
+	const row2 = new Discord.ActionRowBuilder();
+	row2.addComponents(payload);
 
-	await showModal(modal, {
+	const editMessageModal = new Discord.ModalBuilder();
+	editMessageModal.setCustomId('edit-message');
+	editMessageModal.setTitle('Edit message sent as Yamamura');
+	editMessageModal.setComponents(row1, row2);
+
+	await interaction.showModal(editMessageModal, {
 		client: interaction.client,
 		interaction: interaction
 	});
@@ -55,7 +59,7 @@ async function reportUserHandler(interaction) {
 
 const contextMenu = new ContextMenuCommandBuilder();
 
-contextMenu.setDefaultPermission(false);
+contextMenu.setDefaultMemberPermissions(0); // Disable by default
 contextMenu.setName('Edit Yamamura Message');
 contextMenu.setType(ApplicationCommandType.Message);
 

@@ -14,7 +14,7 @@ async function guildMemberAddHandler(member) {
 	const readmeChannel = readmeChannelId && await guild.channels.fetch(readmeChannelId);
 	const rulesChannel = rulesChannelId && await guild.channels.fetch(rulesChannelId);
 
-	const welcomeEmbed = new Discord.MessageEmbed();
+	const welcomeEmbed = new Discord.EmbedBuilder();
 
 	welcomeEmbed.setColor(0x1B1F3B);
 	welcomeEmbed.setTitle('Welcome to Pretendo Network :tada:');

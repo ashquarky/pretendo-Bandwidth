@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 /**
- * 
+ *
  * @param {Discord.ButtonInteraction} interaction
  */
 async function buttonHandler(interaction) {
