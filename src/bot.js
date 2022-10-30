@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const nlpManager = require('./nlp/manager');
 const readyHandler = require('./events/ready');
 const guildMemberAddHandler = require('./events/guildMemberAdd');
 const guildMemberRemoveHandler = require('./events/guildMemberRemove');
@@ -14,6 +15,8 @@ const client = new Discord.Client({
 		Discord.GatewayIntentBits.MessageContent,
 	]
 });
+
+client.nlpManager = nlpManager;
 
 client.buttons = new Discord.Collection();
 client.commands = new Discord.Collection();

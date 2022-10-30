@@ -35,6 +35,20 @@ async function messageCreateHandler(message) {
 
 		return;
 	}
+
+	// * NLP
+	const response = await message.guild.client.nlpManager.process(message.content);
+
+	if (response.intent === 'None' || response.score <= 0.7) {
+		// * Do nothing if no intent found or if the bot is not very sure
+		return;
+	}
+
+	const messagePayload = {
+		content: response.answer
+	};
+
+	await message.reply(messagePayload);
 }
 
 module.exports = messageCreateHandler;

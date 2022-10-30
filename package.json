@@ -25,6 +25,8 @@
     "discord-api-types": "^0.31.2",
     "discord-html-transcripts": "^2.4.5",
     "discord.js": "^14.6.0",
+    "fs-extra": "^10.1.0",
+    "node-nlp": "^4.24.0",
     "simple-json-db": "^2.0.0"
   },
   "devDependencies": {

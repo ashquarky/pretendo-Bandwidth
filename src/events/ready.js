@@ -2,8 +2,10 @@ const Discord = require('discord.js');
 const glob = require('glob');
 const path = require('path');
 const { setupGuild } = require('../setup-guild');
+const nlpTrainer = require('../nlp/training/trainer');
+const config = require('../../config.json');
 
-/**
+/**train
  * 
  * @param {Discord.Client} client
  */
@@ -23,6 +25,14 @@ async function readyHandler(client) {
 
 		await setupGuild(guild);
 		console.log(`setup guild: ${guild.name}`);
+	}
+
+	console.log('Setting up NLP manager');
+
+	if (config.nlp.force_train) {
+		await nlpTrainer.train(client.nlpManager);
+	} else {
+		client.nlpManager.load(`${__dirname}/../nlp/training/model.nlp`);
 	}
 
 	console.log(`Logged in as ${client.user.tag}`);
