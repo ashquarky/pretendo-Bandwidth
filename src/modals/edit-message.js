@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 const editMessageModal = new Discord.ModalBuilder();
 editMessageModal.setCustomId('edit-message');
-editMessageModal.setTitle('Edit message sent as Yamamura');
+editMessageModal.setTitle('Edit message sent as Bandwidth');
 
 /**
  *

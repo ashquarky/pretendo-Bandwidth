@@ -1,2 +1,2 @@
-# Yamamura
-Official community bot for the Pretendo Discord server
+# Bandwidth
+Official Pretendo Network Discord community bot

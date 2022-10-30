@@ -12,7 +12,7 @@ async function reportUserHandler(interaction) {
 	const message = await interaction.channel.messages.fetch(targetId);
 
 	if (message.author.id !== interaction.client.user.id) {
-		throw new Error('Can only manage Yamamura messages with this command');
+		throw new Error('Can only manage Bandwidth messages with this command');
 	}
 
 	const messageJSON = message.toJSON();
@@ -48,7 +48,7 @@ async function reportUserHandler(interaction) {
 
 	const editMessageModal = new Discord.ModalBuilder();
 	editMessageModal.setCustomId('edit-message');
-	editMessageModal.setTitle('Edit message sent as Yamamura');
+	editMessageModal.setTitle('Edit message sent as Bandwidth');
 	editMessageModal.setComponents(row1, row2);
 
 	await interaction.showModal(editMessageModal, {
@@ -60,7 +60,7 @@ async function reportUserHandler(interaction) {
 const contextMenu = new ContextMenuCommandBuilder();
 
 contextMenu.setDefaultMemberPermissions(0); // Disable by default
-contextMenu.setName('Edit Yamamura Message');
+contextMenu.setName('Edit Bandwidth Message');
 contextMenu.setType(ApplicationCommandType.Message);
 
 module.exports = {

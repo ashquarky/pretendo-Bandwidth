@@ -13,7 +13,7 @@ actionRow.addComponents(payloadTextInput);
 
 const sendMessageModal = new Discord.ModalBuilder();
 sendMessageModal.setCustomId('send-message');
-sendMessageModal.setTitle('Send message as Yamamura');
+sendMessageModal.setTitle('Send message as Bandwidth');
 sendMessageModal.addComponents(actionRow);
 
 /**
