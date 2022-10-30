@@ -29,11 +29,11 @@ async function messageCreateHandler(message) {
 				content: lmaod,
 				allowedMentions: { parse: [] }
 			});
-			return;
 		} else {
 			await message.reply('Looks like the resulting message is too long :/');
-			return;
 		}
+
+		return;
 	}
 }
 
