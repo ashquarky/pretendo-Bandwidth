@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v10');
 const util = require('./util');
+const database = require('./database');
 const { bot_token: botToken } = require('../config.json');
 const rest = new REST({ version: '10' }).setToken(botToken);
 
@@ -18,12 +19,14 @@ async function setupGuild(guild) {
 
 	// Setup commands
 	await deployCommandsToGuild(guild);
-	
+
 	try {
 		await util.updateMemberCountChannels(guild);
 	} catch {
-		// we dont care if it fails on setup, itll sync again on join
+		// we dont care if it fails on setup, it'll sync again on join
 	}
+
+	await database.initGuild(guild.id);
 }
 
 /**

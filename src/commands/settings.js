@@ -1,16 +1,16 @@
 const Discord = require('discord.js');
-const db = require('../db');
+const database = require('../database');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const editableOptions = [
-	'mod-applications.channel.log',
-	'report.channel.log',
-	'joinmsg.channels.readme',
-	'joinmsg.channels.rules',
-	'stats.channels.members',
-	'stats.channels.people',
-	'stats.channels.bots',
-	'roles.admin',
+	'admin_role_id',
+	'mod_applications_channel_id',
+	'reports_channel_id',
+	'readme_channel_id',
+	'rules_channel_id',
+	'stats_members_channel_id',
+	'stats_people_channel_id',
+	'stats_bots_channel_id',
 ];
 
 async function verifyInputtedKey(interaction) {
@@ -25,13 +25,18 @@ async function verifyInputtedKey(interaction) {
  * @param {Discord.CommandInteraction} interaction
  */
 async function settingsHandler(interaction) {
+	const { guildId } = interaction;
 	const key = interaction.options.getString('key');
+
 	if (interaction.options.getSubcommand() === 'get') {
 		await verifyInputtedKey(interaction);
+
+		const value = await database.getGuildSetting(guildId, key);
+
 		// this is hellish string concatenation, I know
 		await interaction.reply({
 			content:
-				'```\n' + key + '=' + '\'' + `${db.getDB().get(key)}` + '\'' + '\n```',
+				'```\n' + key + '=' + '\'' + `${value}` + '\'' + '\n```',
 			ephemeral: true,
 			allowedMentions: {
 				parse: [], // dont allow tagging anything
@@ -42,7 +47,8 @@ async function settingsHandler(interaction) {
 
 	if (interaction.options.getSubcommand() === 'set') {
 		await verifyInputtedKey(interaction);
-		db.getDB().set(key, interaction.options.getString('value'));
+
+		await database.updateGuildSetting(guildId, key, interaction.options.getString('value'));
 		await interaction.reply({
 			content: `setting \`${key}\` has been saved successfully`,
 			ephemeral: true,

@@ -1,20 +1,24 @@
 const Discord = require('discord.js');
 const glob = require('glob');
 const path = require('path');
+const database = require('../database');
 const { setupGuild } = require('../setup-guild');
 const nlpTrainer = require('../nlp/training/trainer');
 const config = require('../../config.json');
 
 /**train
- * 
+ *
  * @param {Discord.Client} client
  */
 async function readyHandler(client) {
+	await database.connect();
+
 	loadBotHandlersCollection('buttons', client.buttons);
 	loadBotHandlersCollection('commands', client.commands);
 	loadBotHandlersCollection('context-menus', client.contextMenus);
 	loadBotHandlersCollection('modals', client.modals);
 	loadBotHandlersCollection('select-menus', client.selectMenus);
+
 	console.log('Registered global commands');
 
 	// setup joined guilds

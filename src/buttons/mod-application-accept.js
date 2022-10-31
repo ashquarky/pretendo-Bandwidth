@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const db = require('../db');
+const database = require('../database');
 
 const acceptButton = new Discord.ButtonBuilder();
 acceptButton.setCustomId('mod-application-accept');
@@ -15,7 +15,7 @@ async function modApplicationAcceptHandler(interaction) {
 		ephemeral: true
 	});
 
-	const adminRoleId = db.getDB().get('roles.admin');
+	const adminRoleId = await database.getGuildSetting(interaction.guildId, 'admin_role_id');
 
 	if (!adminRoleId) {
 		throw new Error('No admin role ID set!');

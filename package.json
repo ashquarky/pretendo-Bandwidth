@@ -27,7 +27,8 @@
     "discord.js": "^14.6.0",
     "fs-extra": "^10.1.0",
     "node-nlp": "^4.24.0",
-    "simple-json-db": "^2.0.0"
+    "sqlite": "^4.1.2",
+    "sqlite3": "^5.1.2"
   },
   "devDependencies": {
     "eslint": "^8.14.0",

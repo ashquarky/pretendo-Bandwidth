@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const discordTranscripts = require('discord-html-transcripts');
-const db = require('../db');
+const database = require('../database');
 
 const reason = new Discord.TextInputBuilder();
 reason.setCustomId('reason');
@@ -48,8 +48,9 @@ async function reportUserHandler(interaction) {
 		transcriptCount = parseInt(transcriptCount);
 	}
 
+	const reportsChannelId = await database.getGuildSetting(interaction.guildId, 'reports_channel_id');
 	const channels = await interaction.guild.channels.fetch();
-	const reportsChannel = channels.find(channel => channel.id === db.getDB().get('report.channel.log'));
+	const reportsChannel = channels.find(channel => channel.id === reportsChannelId);
 
 	if (!reportsChannel) {
 		throw new Error('Report failed to submit - channel not setup');

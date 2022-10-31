@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const db = require('../db');
+const database = require('../database');
 const { button: acceptButton } = require('../buttons/mod-application-accept');
 const { button: denyButton } = require('../buttons/mod-application-deny');
 
@@ -72,7 +72,7 @@ async function modApplicationHandler(interaction) {
 	const applyingMember = await interaction.member.fetch();
 	const guild = await interaction.guild.fetch();
 
-	const channelId = db.getDB().get('mod-applications.channel.log');
+	const channelId = await database.getGuildSetting(interaction.guildId, 'mod_applications_channel_id');
 	const channel = channelId && await guild.channels.fetch(channelId);
 
 	if (!channel) {

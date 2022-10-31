@@ -1,15 +1,16 @@
 const Discord = require('discord.js');
 const { ContextMenuCommandBuilder } = require('@discordjs/builders');
 const { ApplicationCommandType } = require('discord-api-types/v10');
-const db = require('../../db');
+const database = require('../../database');
 
 /**
  *
  * @param {Discord.ContextMenuInteraction} interaction
  */
 async function warnPiracyHandler(interaction) {
+	const reportsChannelId = await database.getGuildSetting(interaction.guildId, 'reports_channel_id');
 	const channels = await interaction.guild.channels.fetch();
-	const reportsChannel = channels.find(channel => channel.id === db.getDB().get('report.channel.log'));
+	const reportsChannel = channels.find(channel => channel.id === reportsChannelId);
 
 	if (!reportsChannel) {
 		throw new Error('Report failed to submit - channel not setup');
