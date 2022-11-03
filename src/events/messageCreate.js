@@ -46,6 +46,10 @@ async function messageCreateHandler(message) {
 		return;
 	}
 
+	await tryAutomaticHelp(message);
+}
+
+async function tryAutomaticHelp(message) {
 	// * NLP
 	const response = await message.guild.client.nlpManager.process(message.content);
 
