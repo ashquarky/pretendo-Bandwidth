@@ -54,11 +54,15 @@ async function messageCreateHandler(message) {
 		return;
 	}
 
+	let content = response.answer;
+
+	content += '\n\n_This message was detected as needing help using machine learning, and responded to automatically. Was this done in error?\nIf you would like to stop receiving automatic help, use the `Disable Automatic Help` button below, or use the `/toggle-automatic-help` command_';
+
 	const row = new Discord.ActionRowBuilder();
 	row.addComponents(disableNLPButton);
 
 	const messagePayload = {
-		content: response.answer,
+		content: content,
 		components: [row]
 	};
 
