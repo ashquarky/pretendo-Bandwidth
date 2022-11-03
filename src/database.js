@@ -24,7 +24,9 @@ async function connect() {
 	)`);
 
 	await database.exec(`CREATE TABLE IF NOT EXISTS nlp_disabled (
-		member_id TEXT
+		guild_id TEXT,
+		member_id TEXT,
+		UNIQUE(guild_id, member_id)
 	)`);
 }
 
@@ -40,9 +42,25 @@ async function updateGuildSetting(guildId, name, value) {
 	await database.exec(`UPDATE server_settings SET ${name}=${value} WHERE guild_id=${guildId}`);
 }
 
+async function checkAutomaticHelpDisabled(guildId, memberId) {
+	const result = await database.get(`SELECT EXISTS (SELECT 1 FROM nlp_disabled WHERE guild_id=${guildId} AND member_id=${memberId} LIMIT 1)`);
+	return Object.values(result)[0]; // * Hack. sqlite returns objects not values, need to get the value from the object
+}
+
+async function disableAutomaticHelp(guildId, memberId) {
+	await database.exec(`INSERT OR IGNORE INTO nlp_disabled(guild_id, member_id) VALUES(${guildId}, ${memberId})`);
+}
+
+async function enabledAutomaticHelp(guildId, memberId) {
+	await database.exec(`DELETE FROM nlp_disabled WHERE guild_id=${guildId} AND member_id=${memberId}`);
+}
+
 module.exports = {
 	connect,
 	initGuild,
 	getGuildSetting,
-	updateGuildSetting
+	updateGuildSetting,
+	checkAutomaticHelpDisabled,
+	disableAutomaticHelp,
+	enabledAutomaticHelp
 };

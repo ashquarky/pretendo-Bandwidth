@@ -1,4 +1,6 @@
 const Discord = require('discord.js');
+const { button: disableNLPButton } = require('../buttons/disable-nlp');
+const database = require('../database');
 
 const ayyRegex = /\bay{1,}\b/gi;
 
@@ -36,6 +38,14 @@ async function messageCreateHandler(message) {
 		return;
 	}
 
+	// * Check if automatic help is disabled
+	const isHelpDisabled = await database.checkAutomaticHelpDisabled(message.guildId, message.member.id);
+
+	if (isHelpDisabled) {
+		// * Bail if automatic help is disabled
+		return;
+	}
+
 	// * NLP
 	const response = await message.guild.client.nlpManager.process(message.content);
 
@@ -44,8 +54,12 @@ async function messageCreateHandler(message) {
 		return;
 	}
 
+	const row = new Discord.ActionRowBuilder();
+	row.addComponents(disableNLPButton);
+
 	const messagePayload = {
-		content: response.answer
+		content: response.answer,
+		components: [row]
 	};
 
 	await message.reply(messagePayload);
