@@ -667,17 +667,17 @@
       "en": {
         "howto.cemu": [
           {
-            "answer": "To get started with Pretendo on Cemu, follow the instructions on our website https://pretendo.network/docs/install/cemu"
+            "answer": "To get started with Pretendo on Cemu, follow the instructions on our website <https://pretendo.network/docs/install/cemu>"
           }
         ],
         "howto.citra": [
           {
-            "answer": "To get started with Pretendo on Citra, follow the instructions on our website https://pretendo.network/docs/install/citra"
+            "answer": "To get started with Pretendo on Citra, follow the instructions on our website <https://pretendo.network/docs/install/citra>"
           }
         ],
         "howto.install": [
           {
-            "answer": "To get started with Pretendo, follow the instructions on our website http://pretendo.network/docs"
+            "answer": "To get started with Pretendo, follow the instructions on our website <http://pretendo.network/docs>"
           }
         ]
       }
