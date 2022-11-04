@@ -41,6 +41,26 @@
           "useStemDict": true
         },
         "stemDict": {
+          "cemu,doe,pretendo,support": {
+            "intent": "howto.cemu",
+            "domain": "default"
+          },
+          "can,cemu,i,use": {
+            "intent": "howto.cemu",
+            "domain": "default"
+          },
+          "cemu,do,how,i,use": {
+            "intent": "howto.cemu",
+            "domain": "default"
+          },
+          "cemu,get,how,on,pretendo,to": {
+            "intent": "howto.cemu",
+            "domain": "default"
+          },
+          "ca,cemu,connect,i,not,with": {
+            "intent": "howto.cemu",
+            "domain": "default"
+          },
           "do,how,i,instal,this": {
             "intent": "howto.install",
             "domain": "default"
@@ -83,9 +103,35 @@
           }
         },
         "intentDict": {
+          "howto.cemu": "default",
           "howto.install": "default"
         },
         "sentences": [
+          {
+            "domain": "default",
+            "utterance": "Does Pretendo support Cemu?",
+            "intent": "howto.cemu"
+          },
+          {
+            "domain": "default",
+            "utterance": "Can I use Cemu?",
+            "intent": "howto.cemu"
+          },
+          {
+            "domain": "default",
+            "utterance": "How do I use Cemu?",
+            "intent": "howto.cemu"
+          },
+          {
+            "domain": "default",
+            "utterance": "How to get Pretendo on Cemu?",
+            "intent": "howto.cemu"
+          },
+          {
+            "domain": "default",
+            "utterance": "I can't connect with Cemu",
+            "intent": "howto.cemu"
+          },
           {
             "domain": "default",
             "utterance": "How do I install this?",
@@ -151,23 +197,51 @@
               "log": true
             },
             "features": {
+              "doe": 1,
+              "pretendo": 1,
+              "support": 1,
+              "cemu": 1,
+              "can": 1,
+              "i": 1,
+              "use": 1,
               "how": 1,
               "do": 1,
-              "i": 1,
+              "to": 1,
+              "get": 1,
+              "on": 1,
+              "ca": 1,
+              "not": 1,
+              "connect": 1,
+              "with": 1,
               "instal": 1,
               "this": 1,
-              "pretendo": 1,
-              "can": 1,
-              "get": 1,
               "download": 1,
-              "on": 1,
               "wiiu": 1,
               "3ds": 1
             },
             "intents": {
+              "howto.cemu": 1,
               "howto.install": 1
             },
             "intentFeatures": {
+              "howto.cemu": {
+                "doe": 1,
+                "pretendo": 1,
+                "support": 1,
+                "cemu": 1,
+                "can": 1,
+                "i": 1,
+                "use": 1,
+                "how": 1,
+                "do": 1,
+                "to": 1,
+                "get": 1,
+                "on": 1,
+                "ca": 1,
+                "not": 1,
+                "connect": 1,
+                "with": 1
+              },
               "howto.install": {
                 "how": 1,
                 "do": 1,
@@ -184,14 +258,60 @@
               }
             },
             "featuresToIntent": {
-              "how": [
+              "doe": [
+                "howto.cemu"
+              ],
+              "pretendo": [
+                "howto.cemu",
                 "howto.install"
               ],
-              "do": [
+              "support": [
+                "howto.cemu"
+              ],
+              "cemu": [
+                "howto.cemu"
+              ],
+              "can": [
+                "howto.cemu",
                 "howto.install"
               ],
               "i": [
+                "howto.cemu",
                 "howto.install"
+              ],
+              "use": [
+                "howto.cemu"
+              ],
+              "how": [
+                "howto.cemu",
+                "howto.install"
+              ],
+              "do": [
+                "howto.cemu",
+                "howto.install"
+              ],
+              "to": [
+                "howto.cemu"
+              ],
+              "get": [
+                "howto.cemu",
+                "howto.install"
+              ],
+              "on": [
+                "howto.cemu",
+                "howto.install"
+              ],
+              "ca": [
+                "howto.cemu"
+              ],
+              "not": [
+                "howto.cemu"
+              ],
+              "connect": [
+                "howto.cemu"
+              ],
+              "with": [
+                "howto.cemu"
               ],
               "instal": [
                 "howto.install"
@@ -199,19 +319,7 @@
               "this": [
                 "howto.install"
               ],
-              "pretendo": [
-                "howto.install"
-              ],
-              "can": [
-                "howto.install"
-              ],
-              "get": [
-                "howto.install"
-              ],
               "download": [
-                "howto.install"
-              ],
-              "on": [
                 "howto.install"
               ],
               "wiiu": [
@@ -234,56 +342,109 @@
                 "filterZeros": true
               },
               "features": [
+                "doe",
+                "pretendo",
+                "support",
+                "cemu",
+                "can",
+                "i",
+                "use",
                 "how",
                 "do",
-                "i",
+                "to",
+                "get",
+                "on",
+                "ca",
+                "not",
+                "connect",
+                "with",
                 "instal",
                 "this",
-                "pretendo",
-                "can",
-                "get",
                 "download",
-                "on",
                 "wiiu",
                 "3ds",
                 "nonefeature"
               ],
               "intents": [
+                "howto.cemu",
                 "howto.install",
                 "None"
               ],
               "perceptrons": [
                 [
-                  1.6978747844696045,
-                  1.6978747844696045,
-                  5.0269856452941895,
-                  1.712675929069519,
-                  2.510443925857544,
-                  2.514908790588379,
-                  3.3267786502838135,
-                  1.668718695640564,
-                  1.6425604820251465,
-                  -0.010935590602457523,
-                  0.007037528790533543,
-                  -0.018337352201342583,
-                  -1.6320135593414307,
-                  1.6946225628723501
+                  1.8180783987045288,
+                  -0.03483409062027931,
+                  1.8180783987045288,
+                  9.428102493286133,
+                  -0.11970753222703934,
+                  -0.4391319155693054,
+                  4.279843807220459,
+                  0.9949596524238586,
+                  -1.3204649686813354,
+                  2.3133978843688965,
+                  -0.4735817313194275,
+                  0.7950459718704224,
+                  1.0110247135162354,
+                  1.0110247135162354,
+                  1.0110247135162354,
+                  1.0110247135162354,
+                  -2.409536361694336,
+                  -1.4921562671661377,
+                  -0.450788289308548,
+                  -0.7717337608337402,
+                  -0.7456939220428467,
+                  -1.1973673105239868,
+                  1.2454757890380848
                 ],
                 [
-                  -0.760051429271698,
-                  -0.760051429271698,
-                  -1.5527307987213135,
-                  -0.9976347088813782,
-                  -0.7797008156776428,
-                  -0.7718000411987305,
-                  -0.7908459305763245,
-                  -0.2843911945819855,
-                  -0.2682272493839264,
+                  -0.342509001493454,
+                  3.3707902431488037,
+                  -0.342509001493454,
+                  -5.7297210693359375,
+                  2.835153818130493,
+                  4.655025959014893,
+                  -3.555898666381836,
+                  0.802946925163269,
+                  2.132776975631714,
+                  -1.3291234970092773,
+                  2.403972625732422,
+                  -0.4670856297016144,
+                  -0.21744908392429352,
+                  -0.21744908392429352,
+                  -0.21744908392429352,
+                  -0.21744908392429352,
+                  2.4607179164886475,
+                  3.359267473220825,
+                  2.36029052734375,
+                  0.46113431453704834,
+                  0.40001535415649414,
+                  -0.9200378060340881,
+                  0.9536583220371158
+                ],
+                [
+                  -0.6857027411460876,
+                  -1.0034000873565674,
+                  -0.6857027411460876,
+                  -1.3846862316131592,
+                  -0.7344571948051453,
+                  -1.4768271446228027,
+                  -0.2556599974632263,
+                  -0.7071717381477356,
+                  -0.5027649402618408,
+                  -0.20261156558990479,
+                  -0.29391366243362427,
+                  -0.20261156558990479,
+                  -0.23323512077331543,
+                  -0.23323512077331543,
+                  -0.23323512077331543,
+                  -0.23323512077331543,
+                  -0.673627495765686,
+                  -0.8752871155738831,
+                  -0.21595469117164612,
                   0,
                   0,
-                  0,
-                  9.79096794128418,
-                  4.1384734216192935
+                  9.945014953613281,
+                  3.814246689440494
                 ]
               ]
             }
@@ -293,6 +454,26 @@
     },
     "intentDomains": {},
     "extraSentences": [
+      [
+        "en",
+        "Does Pretendo support Cemu?"
+      ],
+      [
+        "en",
+        "Can I use Cemu?"
+      ],
+      [
+        "en",
+        "How do I use Cemu?"
+      ],
+      [
+        "en",
+        "How to get Pretendo on Cemu?"
+      ],
+      [
+        "en",
+        "I can't connect with Cemu"
+      ],
       [
         "en",
         "How do I install this?"
@@ -349,6 +530,11 @@
     },
     "responses": {
       "en": {
+        "howto.cemu": [
+          {
+            "answer": "To get started with Pretendo on Cemu, follow the instructions on our website http://pretendo.network/docs"
+          }
+        ],
         "howto.install": [
           {
             "answer": "To get started with Pretendo, follow the instructions on our website http://pretendo.network/docs"
