@@ -59,7 +59,7 @@ async function reportUserHandler(interaction) {
 
 const contextMenu = new ContextMenuCommandBuilder();
 
-contextMenu.setDefaultMemberPermissions(0); // Disable by default
+contextMenu.setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator);
 contextMenu.setName('Edit Bandwidth Message');
 contextMenu.setType(ApplicationCommandType.Message);
 

@@ -108,7 +108,7 @@ async function messageHandler(interaction) {
 
 const command = new SlashCommandBuilder();
 
-command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.SendMessages);
+command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator);
 command.setName('message');
 command.setDescription('Send and manage Bandwidth messages');
 command.addStringOption(option => {

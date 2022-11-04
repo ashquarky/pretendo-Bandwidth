@@ -33,7 +33,7 @@ async function reportUserHandler(interaction) {
 
 const contextMenu = new ContextMenuCommandBuilder();
 
-contextMenu.setDefaultMemberPermissions(0); // Disable by default
+contextMenu.setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator);
 contextMenu.setName('Get Message Payload');
 contextMenu.setType(ApplicationCommandType.Message);
 

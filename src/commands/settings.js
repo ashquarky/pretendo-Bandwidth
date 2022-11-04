@@ -77,7 +77,7 @@ async function settingsHandler(interaction) {
 
 const command = new SlashCommandBuilder();
 
-command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.SendMessages);
+command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator);
 command.setName('settings');
 command.setDescription('Setup the bot');
 command.addSubcommand((cmd) => {
