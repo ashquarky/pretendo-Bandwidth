@@ -1,6 +1,6 @@
 {
 	"intent": "howto.install",
-	"answer": "To get started with Pretendo, follow the instructions on our website http://pretendo.network/docs",
+	"answer": "To get started with Pretendo, follow the instructions on our website <http://pretendo.network/docs>",
 	"utterances": [
 		"How do I install this?",
 		"How do I install Pretendo?",
