@@ -1,10 +1,12 @@
 const Discord = require('discord.js');
 const { button: disableNLPButton } = require('../buttons/disable-nlp');
 const wiiuSupportCodes = require('../console-errors/wiiu/support-codes');
+const threeDSSupportCodes = require('../console-errors/3ds/support-codes');
 const database = require('../database');
 
 const ayyRegex = /\bay{1,}\b/gi;
 const WIIU_SUPPORT_CODE_REGEX = /(1\d{2}-\d{4})/gm;
+const THREE_DS_SUPPORT_CODE_REGEX = /(0\d{2}-\d{4})/gm;
 
 /**
  *
@@ -96,10 +98,14 @@ async function tryAutomaticHelp(message) {
  * @param {Discord.Message} message
  */
 function checkForErrorCode(message) {
-	// TODO - WiiU error codes, 3DS support codes, 3DS error codes
+	// TODO - WiiU error codes, 3DS error codes
 
 	if (WIIU_SUPPORT_CODE_REGEX.test(message.content)) {
 		return getWiiUSupportCodeInfo(message.content.match(WIIU_SUPPORT_CODE_REGEX)[0]);
+	}
+
+	if (THREE_DS_SUPPORT_CODE_REGEX.test(message.content)) {
+		return get3DSSupportCodeInfo(message.content.match(THREE_DS_SUPPORT_CODE_REGEX)[0]);
 	}
 }
 
@@ -158,6 +164,73 @@ function getWiiUSupportCodeInfo(supportCode) {
 			value: `\`\`\`\n${code.message}\n\`\`\``
 		}
 	]);
+
+	if (code.link !== 'Missing link') {
+
+	}
+
+	return embed;
+}
+
+function get3DSSupportCodeInfo(supportCode) {
+	const [moduleId, descriptionId] = supportCode.split('-');
+
+	const mod = threeDSSupportCodes[moduleId]; // * `module` is reserved
+
+	if (!mod || !mod.codes[descriptionId]) {
+		return;
+	}
+
+	const code = mod.codes[descriptionId];
+
+	const embed = new Discord.EmbedBuilder();
+	embed.setColor(0xD12228);
+	embed.setTitle(`${supportCode} (3DS/2DS)`);
+	embed.setDescription('3DS/2DS support code detected\nInformation is WIP and may be missing/incorrect');
+	embed.setFields([
+		{
+			name: 'Module Name',
+			value: mod.name,
+			inline: true
+		},
+		{
+			name: '\u200b',
+			value: '\u200b',
+			inline: true
+		},
+		{
+			name: 'Module Description',
+			value: mod.description,
+			inline: true
+		},
+		{
+			name: 'Error Name',
+			value: `\`${code.name}\``,
+			inline: true
+		},
+		{
+			name: '\u200b',
+			value: '\u200b',
+			inline: true
+		},
+		{
+			name: 'Error Description',
+			value: code.description,
+			inline: true
+		},
+		{
+			name: 'Fix',
+			value: code.fix
+		},
+		{
+			name: 'Console dialog message',
+			value: `\`\`\`\n${code.message}\n\`\`\``
+		}
+	]);
+
+	if (code.link !== 'Missing link') {
+
+	}
 
 	return embed;
 }
