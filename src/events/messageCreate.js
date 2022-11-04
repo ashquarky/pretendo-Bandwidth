@@ -1,8 +1,10 @@
 const Discord = require('discord.js');
 const { button: disableNLPButton } = require('../buttons/disable-nlp');
+const wiiuSupportCodes = require('../console-errors/wiiu/support-codes');
 const database = require('../database');
 
 const ayyRegex = /\bay{1,}\b/gi;
+const WIIU_SUPPORT_CODE_REGEX = /(1\d{2}-\d{4})/gm;
 
 /**
  *
@@ -13,7 +15,7 @@ async function messageCreateHandler(message) {
 
 	// Check if the message is a command and handle it
 	if (message.content === '.toggleupdates') {
-		await message.reply('Looks like you tried to use a legacy command! Try our new slash commands by just typing "/"!');
+		await message.reply('Looks like you tried to use a legacy command! Try our new slash commands by just typing '/'!');
 		return;
 	}
 
@@ -49,7 +51,23 @@ async function messageCreateHandler(message) {
 	await tryAutomaticHelp(message);
 }
 
+/**
+ *
+ * @param {Discord.Message} message
+ */
 async function tryAutomaticHelp(message) {
+	const errorCodeEmbed = checkForErrorCode(message);
+
+	if (errorCodeEmbed) {
+		// * Found an error/support code
+		// * Send it and bail
+		await message.reply({
+			embeds: [errorCodeEmbed]
+		});
+
+		return;
+	}
+
 	// * NLP
 	const response = await message.guild.client.nlpManager.process(message.content);
 
@@ -71,6 +89,77 @@ async function tryAutomaticHelp(message) {
 	};
 
 	await message.reply(messagePayload);
+}
+
+/**
+ *
+ * @param {Discord.Message} message
+ */
+function checkForErrorCode(message) {
+	// TODO - WiiU error codes, 3DS support codes, 3DS error codes
+
+	if (WIIU_SUPPORT_CODE_REGEX.test(message.content)) {
+		return getWiiUSupportCodeInfo(message.content.match(WIIU_SUPPORT_CODE_REGEX)[0]);
+	}
+}
+
+function getWiiUSupportCodeInfo(supportCode) {
+	const [moduleId, descriptionId] = supportCode.split('-');
+
+	const mod = wiiuSupportCodes[moduleId]; // * `module` is reserved
+
+	if (!mod || !mod.codes[descriptionId]) {
+		return;
+	}
+
+	const code = mod.codes[descriptionId];
+
+	const embed = new Discord.EmbedBuilder();
+	embed.setColor(0x009AC7);
+	embed.setTitle(`${supportCode} (Wii U)`);
+	embed.setDescription('Wii U support code detected\nInformation is WIP and may be missing/incorrect');
+	embed.setFields([
+		{
+			name: 'Module Name',
+			value: mod.name,
+			inline: true
+		},
+		{
+			name: '\u200b',
+			value: '\u200b',
+			inline: true
+		},
+		{
+			name: 'Module Description',
+			value: mod.description,
+			inline: true
+		},
+		{
+			name: 'Error Name',
+			value: `\`${code.name}\``,
+			inline: true
+		},
+		{
+			name: '\u200b',
+			value: '\u200b',
+			inline: true
+		},
+		{
+			name: 'Error Description',
+			value: code.description,
+			inline: true
+		},
+		{
+			name: 'Fix',
+			value: code.fix
+		},
+		{
+			name: 'Console dialog message',
+			value: `\`\`\`\n${code.message}\n\`\`\``
+		}
+	]);
+
+	return embed;
 }
 
 module.exports = messageCreateHandler;
