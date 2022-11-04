@@ -166,7 +166,7 @@ function getWiiUSupportCodeInfo(supportCode) {
 	]);
 
 	if (code.link !== 'Missing link') {
-
+		embed.setURL(code.link);
 	}
 
 	return embed;
@@ -229,7 +229,7 @@ function get3DSSupportCodeInfo(supportCode) {
 	]);
 
 	if (code.link !== 'Missing link') {
-
+		embed.setURL(code.link);
 	}
 
 	return embed;
