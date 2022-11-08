@@ -6,6 +6,7 @@ const { setupGuild } = require('../setup-guild');
 const nlpTrainer = require('../nlp/training/trainer');
 const config = require('../../config.json');
 
+
 /**train
  *
  * @param {Discord.Client} client
