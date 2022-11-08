@@ -25,7 +25,7 @@ const PRETENDO_SUPPORT_CODE_REGEX = /(678-\d{4}|598-\d{4})/gm; // * 678 = Martin
 	}
 
 	if (THREE_DS_SUPPORT_CODE_REGEX.test(text)) {
-		return get3DSSupportCodeInfo(message.content.match(THREE_DS_SUPPORT_CODE_REGEX)[0]);
+		return get3DSSupportCodeInfo(text.match(THREE_DS_SUPPORT_CODE_REGEX)[0]);
 	}
 }
 

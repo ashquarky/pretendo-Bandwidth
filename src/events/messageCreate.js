@@ -66,7 +66,7 @@ async function tryAutomaticHelp(message) {
 		row.addComponents(expandErrorButton);
 		
 		const embed = new Discord.EmbedBuilder();
-		embed.setColor(0x009AC7);
+		embed.setColor(errorCodeEmbed.data.color);
 		embed.setTitle(errorCodeEmbed.data.title);
 		embed.setDescription('Support code detected, press to expand information');
 		
