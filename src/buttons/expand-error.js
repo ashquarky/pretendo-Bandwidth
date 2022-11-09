@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const checkForErrorCode = require("../utils/errorCode").checkForErrorCode;
+const errorCodeUtils = require("../utils/errorCode");
 
 const expandErrorButton = new Discord.ButtonBuilder();
 expandErrorButton.setCustomId('expand');
@@ -18,7 +18,7 @@ async function expandErrorHandler(interaction) {
     const ogButton = message.components[0]
 
     // Grab that error code again
-    const errorCodeEmbed = checkForErrorCode(message.embeds[0].title);
+    const errorCodeEmbed = errorCodeUtils.checkForErrorCode(message.embeds[0].title);
 
     // Swap the embed out, while removing our button component
 	message.edit({

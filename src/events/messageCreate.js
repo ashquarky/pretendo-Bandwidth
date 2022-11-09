@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const { button: disableNLPButton } = require('../buttons/disable-nlp');
 const { button: expandErrorButton } = require('../buttons/expand-error');
-const checkForErrorCode = require('../utils/errorCode').checkForErrorCode;
+const errorCodeUtils = require('../utils/errorCode');
 const database = require('../database');
 
 const ayyRegex = /\bay{1,}\b/gi;
@@ -56,7 +56,7 @@ async function messageCreateHandler(message) {
  * @param {Discord.Message} message
  */
 async function tryAutomaticHelp(message) {
-	const errorCodeEmbed = checkForErrorCode(message.content);
+	const errorCodeEmbed = errorCodeUtils.checkForErrorCode(message.content);
 
 	if (errorCodeEmbed) {
 		// * Found an error/support code
