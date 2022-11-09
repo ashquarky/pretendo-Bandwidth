@@ -13,12 +13,6 @@ const ayyRegex = /\bay{1,}\b/gi;
 async function messageCreateHandler(message) {
 	if (message.author.bot) return;
 
-	// Check if the message is a command and handle it
-	if (message.content === '.toggleupdates') {
-		await message.reply('Looks like you tried to use a legacy command! Try our new slash commands by just typing '/'!');
-		return;
-	}
-
 	// ayy => lmaoo
 	if (ayyRegex.test(message.content)) {
 		const lmaod = message.content.replaceAll(ayyRegex, (match) => {
