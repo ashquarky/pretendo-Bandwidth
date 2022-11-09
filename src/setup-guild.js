@@ -1,10 +1,11 @@
 const Discord = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v10');
-const util = require('./util');
+const timedUtils = require('./utils/timed');
 const database = require('./database');
 const { bot_token: botToken } = require('../config.json');
 const rest = new REST({ version: '10' }).setToken(botToken);
+
 
 /**
  *
@@ -21,10 +22,15 @@ async function setupGuild(guild) {
 	await deployCommandsToGuild(guild);
 
 	try {
-		await util.updateMemberCountChannels(guild);
+		await timedUtils.updateMemberCountChannels(guild);
 	} catch {
 		// we dont care if it fails on setup, it'll sync again on join
 	}
+
+	// Set up our timer for refreshing the member count (5 minutes)
+	setInterval(async function(){
+		await timedUtils.updateMemberCountChannels(guild);
+   }, 300000)
 
 	await database.initGuild(guild.id);
 }

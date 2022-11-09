@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const util = require('../util');
 const database = require('../database');
 
 /**
@@ -18,7 +17,7 @@ async function guildMemberAddHandler(member) {
 
 	welcomeEmbed.setColor(0x1B1F3B);
 	welcomeEmbed.setTitle('Welcome to Pretendo Network :tada:');
-	welcomeEmbed.setURL('https://preten{do.network');
+	welcomeEmbed.setURL('https://pretendo.network');
 
 	let rulesAndReadmeText = 'to rules and readme channels';
 
@@ -36,8 +35,6 @@ async function guildMemberAddHandler(member) {
 			embeds: [welcomeEmbed],
 		});
 	} catch {}
-
-	await util.updateMemberCountChannels(member.guild);
 }
 
 module.exports = guildMemberAddHandler;
