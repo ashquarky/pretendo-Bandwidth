@@ -64,31 +64,13 @@ async function reportUserHandler(interaction) {
 	reportEmbed.setFields(
 		{
 			name: 'Target User',
-			value: `<@${targetMember.id}>`,
+			value: `<@${targetMember.id}>\n${targetMember.id}`,
 			inline: true
-		},
-		{
-			name: 'Target User ID',
-			value: targetMember.id,
-			inline: true
-		},
-		{
-			name: '\u200b',
-			value: '\u200b'
 		},
 		{
 			name: 'Reporting User',
-			value: `<@${interaction.member.id}>`,
+			value: `<@${interaction.member.id}>\n${interaction.member.id}`,
 			inline: true
-		},
-		{
-			name: 'Reporting User ID',
-			value: interaction.member.id,
-			inline: true
-		},
-		{
-			name: '\u200b',
-			value: '\u200b'
 		},
 		{
 			name: 'Channel Tag',
@@ -102,7 +84,7 @@ async function reportUserHandler(interaction) {
 		},
 		{
 			name: 'Reason',
-			value: reason
+			value: reason.substring(0, 1024)
 		}
 	);
 	reportEmbed.setFooter({
