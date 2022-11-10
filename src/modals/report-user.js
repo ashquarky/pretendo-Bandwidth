@@ -84,7 +84,7 @@ async function reportUserHandler(interaction) {
 		},
 		{
 			name: 'Reason',
-			value: reason
+			value: reason.substring(0, 1024)
 		}
 	);
 	reportEmbed.setFooter({
