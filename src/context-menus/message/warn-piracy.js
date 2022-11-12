@@ -58,13 +58,8 @@ async function warnPiracyHandler(interaction) {
 			inline: true
 		},
 		{
-			name: 'Channel Tag',
-			value: `<#${interaction.channelId}>`,
-			inline: true
-		},
-		{
-			name: 'Channel Name',
-			value: interaction.channel.name,
+			name: 'Channel',
+			value: `<#${interaction.channelId}>\n${interaction.channel.name}`,
 			inline: true
 		},
 		{
