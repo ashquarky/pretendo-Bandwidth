@@ -32,7 +32,7 @@ async function modApplicationAcceptHandler(interaction) {
 	const rowOld = message.components[0];
 	const [acceptButtonOld, denyButtonOld] = rowOld.components;
 
-	modApplicationEmbed.setColor(0xFF0000);
+	modApplicationEmbed.setColor(0xF36F8A);
 	modApplicationEmbed.setImage('attachment://denied-banner.png');
 	modApplicationEmbed.setThumbnail('attachment://denied-icon.png');
 

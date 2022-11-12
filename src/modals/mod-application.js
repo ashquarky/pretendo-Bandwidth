@@ -81,7 +81,7 @@ async function modApplicationHandler(interaction) {
 
 	const modApplicationEmbed = new Discord.EmbedBuilder();
 
-	modApplicationEmbed.setColor(0x0096FF);
+	modApplicationEmbed.setColor(0x9D6FF3);
 	modApplicationEmbed.setTitle('Mod Application');
 	modApplicationEmbed.setDescription('A user has submitted a moderator application');
 	modApplicationEmbed.setImage('attachment://pending-banner.png');
