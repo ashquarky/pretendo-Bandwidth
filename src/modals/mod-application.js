@@ -138,6 +138,7 @@ async function modApplicationHandler(interaction) {
 
 module.exports = {
 	name: modApplicationModal.data.custom_id,
+	cooldown: 1000 * 60 * 60 * 24 * 30, // ~ 1 month
 	modal: modApplicationModal,
 	handler: modApplicationHandler
 };

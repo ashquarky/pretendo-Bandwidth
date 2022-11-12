@@ -28,6 +28,13 @@ async function connect() {
 		member_id TEXT,
 		UNIQUE(guild_id, member_id)
 	)`);
+
+	await database.exec(`CREATE TABLE IF NOT EXISTS command_cooldowns (
+		member_id TEXT,
+		command_id TEXT,
+		cooldown TEXT,
+		UNIQUE(member_id, command_id)
+	)`);
 }
 
 async function initGuild(guildId) {
@@ -55,6 +62,18 @@ async function enabledAutomaticHelp(guildId, memberId) {
 	await database.exec(`DELETE FROM nlp_disabled WHERE guild_id=${guildId} AND member_id=${memberId}`);
 }
 
+async function initMemberCooldown(memberId, commandId) {
+	await database.exec(`INSERT OR IGNORE INTO command_cooldowns(member_id, command_id, cooldown) VALUES(${memberId}, '${commandId}', '0')`);
+}
+
+async function updateCommandCooldown(memberId, commandId, cooldown) {
+	await database.exec(`UPDATE command_cooldowns SET cooldown='${cooldown}' WHERE member_id=${memberId} AND command_id='${commandId}'`);
+}
+
+async function getCommandCooldown(memberId, commandId) {
+	return (await database.get(`SELECT cooldown FROM command_cooldowns WHERE member_id=${memberId} AND command_id='${commandId}'`))["cooldown"];
+}
+
 module.exports = {
 	connect,
 	initGuild,
@@ -62,5 +81,8 @@ module.exports = {
 	updateGuildSetting,
 	checkAutomaticHelpDisabled,
 	disableAutomaticHelp,
-	enabledAutomaticHelp
+	enabledAutomaticHelp,
+	initMemberCooldown,
+	updateCommandCooldown,
+	getCommandCooldown
 };
