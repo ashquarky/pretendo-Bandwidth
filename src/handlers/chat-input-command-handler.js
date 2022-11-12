@@ -18,7 +18,7 @@ async function chatInputCommandHandler(interaction) {
 		throw new Error(`Missing command handler for \`${commandName}\``);
 	}
 
-	// run the command
+	// check for cooldown and run the command
 	const cooldown = await cooldownUtils.isInteractionOnCooldown(command, memberId)
 	if(!cooldown) 
 	{

@@ -18,7 +18,7 @@ async function modalSubmitHandler(interaction) {
 		throw new Error(`Missing modal handler for \`${customId}\``);
 	}
 
-	// run the modal
+	// check for cooldown and run the modal
 	const cooldown = await cooldownUtils.isInteractionOnCooldown(modal, memberId)
 	if(!cooldown) 
 	{

@@ -9,9 +9,11 @@ const database = require('../database');
 async function isInteractionOnCooldown(command, memberId) {
 	if(!command.cooldown) {return false}
 
+    // Initialize our cooldown if not already and grab the cooldown
 	await database.initMemberCooldown(memberId, command.name)
 	const cooldown = await database.getCommandCooldown(memberId, command.name)
 
+    // Check if we are still on cooldown or if there has never been a cooldown for this command yet
 	if(cooldown == 0 || Date.now() > cooldown) {return false}
 
 	const cooldownEmbed = new Discord.EmbedBuilder();
@@ -22,6 +24,7 @@ async function isInteractionOnCooldown(command, memberId) {
 	cooldownEmbed.setDescription('Sorry, that action is on cooldown right now.');
 	cooldownEmbed.setFooter({ text: `Expires ${relativeTime}` });
 
+    // Return an embed back rather than false that will be used to show we're on cooldown
 	return cooldownEmbed;
 }
 
