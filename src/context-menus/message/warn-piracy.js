@@ -43,7 +43,7 @@ async function warnPiracyHandler(interaction) {
 
 	const reportEmbed = new Discord.EmbedBuilder();
 
-	reportEmbed.setColor(0xC0C0C0);
+	reportEmbed.setColor(0xF36F8A);
 	reportEmbed.setTitle('User Report');
 	reportEmbed.setDescription('――――――――――――――――――――――――――――――――――');
 	reportEmbed.setFields(
