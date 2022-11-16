@@ -3,10 +3,10 @@ const wiiuSupportCodes = require('../console-errors/wiiu/support-codes');
 const threeDSSupportCodes = require('../console-errors/3ds/support-codes');
 const pretendoSupportCodes = require('../console-errors/pretendo/support-codes');
 
-const WIIU_SUPPORT_CODE_REGEX = /(1\d{2}-\d{4})/gm;
-const THREE_DS_SUPPORT_CODE_REGEX = /(0\d{2}-\d{4})/gm;
+const WIIU_SUPPORT_CODE_REGEX = /(\b1\d{2}-\d{4}\b)/gm;
+const THREE_DS_SUPPORT_CODE_REGEX = /(\b0\d{2}-\d{4}\b)/gm;
 // * There is probably a better way to do this regex
-const PRETENDO_SUPPORT_CODE_REGEX = /(678-\d{4}|598-\d{4})/gm; // * 678 = Martini, 598 = Juxtaposition
+const PRETENDO_SUPPORT_CODE_REGEX = /(\b678-\d{4}\b|\b598-\d{4}\b)/gm; // * 678 = Martini, 598 = Juxtaposition
 
 /**
  *
