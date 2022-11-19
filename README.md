@@ -1,4 +1,4 @@
-![Bandwidth Banner](./src/images/bandwidth_banner.png)
+![Bandwidth Banner](./src/images/bandwidth-banner.png)
 ___
 Bandwidth is the official Pretendo Network Discord community bot!
 
