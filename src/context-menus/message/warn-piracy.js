@@ -79,7 +79,17 @@ async function warnPiracyHandler(interaction) {
 	});
 	reportEmbed.setTimestamp(Date.now());
 
+	const transcriptButton = new Discord.ButtonBuilder()
+	.setLabel('Jump!')
+	.setStyle(Discord.ButtonStyle.Link)
+	.setEmoji('📨')
+	.setURL(message.url);
+
+	const row = new Discord.ActionRowBuilder();
+	row.addComponents(transcriptButton);
+
 	await reportsChannel.send({
+		components: [row],
 		embeds: [reportEmbed]
 	});
 
