@@ -28,7 +28,7 @@ async function reportUserHandler(interaction) {
 		return;
 	}
 
-	reportUserModal.setCustomId(`${reportUserModal.customId}-${targetId}`);
+	reportUserModal.setCustomId(`${reportUserModal.data.custom_id}-${targetId}`);
 	reportUserModal.setTitle(`Reporting ${targetMember.user.tag}`);
 
 	interaction.showModal(reportUserModal, {

@@ -58,7 +58,7 @@ async function reportUserHandler(interaction) {
 
 	const reportEmbed = new Discord.EmbedBuilder();
 
-	reportEmbed.setColor(0xC0C0C0);
+	reportEmbed.setColor(0xF36F8A);
 	reportEmbed.setTitle('User Report');
 	reportEmbed.setDescription('――――――――――――――――――――――――――――――――――');
 	reportEmbed.setFields(
@@ -90,8 +90,7 @@ async function reportUserHandler(interaction) {
 
 	const transcript = await discordTranscripts.createTranscript(interaction.channel, {
 		limit: transcriptCount,
-		fileName: 'transcript.html',
-		minify: true
+		poweredBy: false
 	});
 
 	const message = await reportsChannel.send({
@@ -99,17 +98,18 @@ async function reportUserHandler(interaction) {
 		files: [transcript]
 	});
 
-	const transcriptButton = new Discord.MessageButton();
-	transcriptButton.setEmoji('📜');
-	transcriptButton.setLabel('Download Transcript');
-	transcriptButton.setStyle('LINK');
-	transcriptButton.setURL(message.attachments.first().url);
+	const transcriptButton = new Discord.ButtonBuilder()
+	.setLabel('Download Transcript')
+	.setStyle(Discord.ButtonStyle.Link)
+	.setEmoji('📜')
+	.setURL(message.attachments.first().url);
 
 	const row = new Discord.ActionRowBuilder();
 	row.addComponents(transcriptButton);
 
 	await message.edit({
-		components: [row]
+		components: [row],
+		files: []
 	});
 
 	await interaction.editReply({
