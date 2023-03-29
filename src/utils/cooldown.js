@@ -7,14 +7,18 @@ const database = require('../database');
  * @param {Number} memberId
  */
 async function isInteractionOnCooldown(command, memberId) {
-	if(!command.cooldown) {return false}
+	if (!command.cooldown) {
+        return false
+    }
 
     // Initialize our cooldown if not already and grab the cooldown
 	await database.initMemberCooldown(memberId, command.name)
 	const cooldown = await database.getCommandCooldown(memberId, command.name)
 
     // Check if we are still on cooldown or if there has never been a cooldown for this command yet
-	if(cooldown == 0 || Date.now() > cooldown) {return false}
+	if (cooldown == 0 || Date.now() > cooldown) {
+        return false
+    }
 
 	const cooldownEmbed = new Discord.EmbedBuilder();
 	const relativeTime = getRelativeTime(parseInt(cooldown))
@@ -42,7 +46,7 @@ async function beginCooldown(command, memberId) {
 function getRelativeTime(timestamp) {
 
     const msPerMinute = 60 * 1000;
-	const msPerHour = msPerMinute * 60;
+    const msPerHour = msPerMinute * 60;
     const msPerDay = msPerHour * 24;
     const msPerMonth = msPerDay * 30;
     const msPerYear = msPerDay * 365;

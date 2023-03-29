@@ -74,9 +74,12 @@ command.addSubcommand((cmd) => {
 		option.setName('key');
 		option.setDescription('Key to modify');
 		option.setRequired(true);
-		for(setting in editableOptions) {
+		for (setting in editableOptions) {
 			option.addChoices(
-				{ name: editableOptions[setting], value: editableOptions[setting] }
+				{ 
+					name: editableOptions[setting], 
+					value: editableOptions[setting] 
+				}
 			);
 		}
 		return option;
@@ -96,9 +99,12 @@ command.addSubcommand((cmd) => {
 		option.setName('key');
 		option.setDescription('Key to modify');
 		option.setRequired(true);
-		for(setting in editableOptions) {
+		for (setting in editableOptions) {
 			option.addChoices(
-			{ name: editableOptions[setting], value: editableOptions[setting] }
+			{ 
+				name: editableOptions[setting],
+				value: editableOptions[setting]
+			}
 			);
 		}
 		return option;

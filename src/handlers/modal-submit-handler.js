@@ -20,15 +20,18 @@ async function modalSubmitHandler(interaction) {
 
 	// check for cooldown and run the modal
 	const cooldown = await cooldownUtils.isInteractionOnCooldown(modal, memberId)
-	if(!cooldown) 
-	{
+	if (!cooldown) {
 		await modal.handler(interaction);
-		if(modal.cooldown) { cooldownUtils.beginCooldown(modal, memberId) }
+		if (modal.cooldown) {
+			cooldownUtils.beginCooldown(modal, memberId);
+		}
 	} else {
-	await interaction.reply({
-		embeds: [cooldown],
-		ephemeral: true
-	});
+	await interaction.reply(
+		{
+			embeds: [cooldown],
+			ephemeral: true
+		}
+	);
 	}
 }
 

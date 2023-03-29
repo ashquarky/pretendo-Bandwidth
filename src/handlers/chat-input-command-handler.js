@@ -20,15 +20,18 @@ async function chatInputCommandHandler(interaction) {
 
 	// check for cooldown and run the command
 	const cooldown = await cooldownUtils.isInteractionOnCooldown(command, memberId)
-	if(!cooldown) 
-	{
+	if (!cooldown) {
 		await command.handler(interaction);
-		if(command.cooldown) { cooldownUtils.beginCooldown(command, memberId) }
+		if (command.cooldown) { 
+			cooldownUtils.beginCooldown(command, memberId);
+		}
 	} else {
-	await interaction.reply({
-		embeds: [cooldown],
-		ephemeral: true
-	});
+	await interaction.reply(
+		{
+			embeds: [cooldown],
+			ephemeral: true
+		}
+	);
 	}
 }
 
