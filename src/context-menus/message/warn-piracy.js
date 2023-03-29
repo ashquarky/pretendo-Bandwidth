@@ -79,14 +79,15 @@ async function warnPiracyHandler(interaction) {
 	});
 	reportEmbed.setTimestamp(Date.now());
 
-	const transcriptButton = new Discord.ButtonBuilder()
-	.setLabel('Jump!')
-	.setStyle(Discord.ButtonStyle.Link)
-	.setEmoji('📨')
-	.setURL(message.url);
+	const jumpButton = new Discord.ButtonBuilder()
+	
+	jumpButton.setLabel('Jump!')
+	jumpButton.setStyle(Discord.ButtonStyle.Link)
+	jumpButton.setEmoji('📨')
+	jumpButton.setURL(message.url);
 
 	const row = new Discord.ActionRowBuilder();
-	row.addComponents(transcriptButton);
+	row.addComponents(jumpButton);
 
 	await reportsChannel.send({
 		components: [row],

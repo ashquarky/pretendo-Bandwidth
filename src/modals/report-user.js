@@ -99,10 +99,11 @@ async function reportUserHandler(interaction) {
 	});
 
 	const transcriptButton = new Discord.ButtonBuilder()
-	.setLabel('Download Transcript')
-	.setStyle(Discord.ButtonStyle.Link)
-	.setEmoji('📜')
-	.setURL(message.attachments.first().url);
+	
+	transcriptButton.setLabel('Download Transcript')
+	transcriptButton.setStyle(Discord.ButtonStyle.Link)
+	transcriptButton.setEmoji('📜')
+	transcriptButton.setURL(message.attachments.first().url);
 
 	const row = new Discord.ActionRowBuilder();
 	row.addComponents(transcriptButton);
