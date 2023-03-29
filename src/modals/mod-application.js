@@ -81,9 +81,9 @@ async function modApplicationHandler(interaction) {
 
 	const modApplicationEmbed = new Discord.EmbedBuilder();
 
-	modApplicationEmbed.setColor(0x0096FF);
+	modApplicationEmbed.setColor(0x9D6FF3);
 	modApplicationEmbed.setTitle('Mod Application');
-	modApplicationEmbed.setDescription('A user has submitted a moderator application');
+	modApplicationEmbed.setDescription(`<@${applyingMember.user.id}> has submitted a moderator application`);
 	modApplicationEmbed.setImage('attachment://pending-banner.png');
 	modApplicationEmbed.setThumbnail('attachment://pending-icon.png');
 	modApplicationEmbed.setAuthor({
@@ -138,6 +138,7 @@ async function modApplicationHandler(interaction) {
 
 module.exports = {
 	name: modApplicationModal.data.custom_id,
+	cooldown: 1000 * 60 * 60 * 24 * 30, // ~ 1 month
 	modal: modApplicationModal,
 	handler: modApplicationHandler
 };

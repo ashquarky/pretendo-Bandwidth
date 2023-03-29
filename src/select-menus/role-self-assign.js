@@ -34,7 +34,7 @@ async function roleSelfAssignHandler(interaction) {
 
 	if (!role) {
 		await interaction.followUp({
-			content: 'Unable to find the requested role. Contact and admin as soon as possible',
+			content: 'Unable to find the requested role. Contact an admin as soon as possible',
 			ephemeral: true
 		});
 

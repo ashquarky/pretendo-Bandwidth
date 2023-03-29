@@ -51,12 +51,12 @@ async function messageCreateHandler(message) {
  */
 async function tryAutomaticHelp(message) {
 	const errorCodeEmbed = errorCodeUtils.checkForErrorCode(message.content);
+	const row = new Discord.ActionRowBuilder();
 
 	if (errorCodeEmbed) {
 		// * Found an error/support code
 		// * Send it and bail
 
-		const row = new Discord.ActionRowBuilder();
 		row.addComponents(expandErrorButton);
 		
 		const embed = new Discord.EmbedBuilder();

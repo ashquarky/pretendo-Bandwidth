@@ -43,7 +43,7 @@ async function warnPiracyHandler(interaction) {
 
 	const reportEmbed = new Discord.EmbedBuilder();
 
-	reportEmbed.setColor(0xC0C0C0);
+	reportEmbed.setColor(0xF36F8A);
 	reportEmbed.setTitle('User Report');
 	reportEmbed.setDescription('――――――――――――――――――――――――――――――――――');
 	reportEmbed.setFields(
@@ -58,13 +58,8 @@ async function warnPiracyHandler(interaction) {
 			inline: true
 		},
 		{
-			name: 'Channel Tag',
-			value: `<#${interaction.channelId}>`,
-			inline: true
-		},
-		{
-			name: 'Channel Name',
-			value: interaction.channel.name,
+			name: 'Channel',
+			value: `<#${interaction.channelId}>\n${interaction.channel.name}`,
 			inline: true
 		},
 		{
@@ -84,7 +79,18 @@ async function warnPiracyHandler(interaction) {
 	});
 	reportEmbed.setTimestamp(Date.now());
 
+	const jumpButton = new Discord.ButtonBuilder()
+	
+	jumpButton.setLabel('Jump!')
+	jumpButton.setStyle(Discord.ButtonStyle.Link)
+	jumpButton.setEmoji('📨')
+	jumpButton.setURL(message.url);
+
+	const row = new Discord.ActionRowBuilder();
+	row.addComponents(jumpButton);
+
 	await reportsChannel.send({
+		components: [row],
 		embeds: [reportEmbed]
 	});
 
