@@ -51,7 +51,7 @@ function getRelativeTime(timestamp) {
     const msPerMonth = msPerDay * 30;
     const msPerYear = msPerDay * 365;
 
-    const elapsed = timestamp - Date.now()
+    const elapsed = Number(timestamp.toString().padEnd(13, '0')) - Date.now()
 
     if (elapsed < msPerMinute) {
          return `in ${Math.round(elapsed/1000)} second(s)`;
@@ -80,5 +80,6 @@ function getRelativeTime(timestamp) {
 
 module.exports = {
 	isInteractionOnCooldown,
-	beginCooldown
+	beginCooldown,
+    getRelativeTime
 };

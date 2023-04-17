@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const glob = require('glob');
 const path = require('path');
 const database = require('../database');
+const pollUtils = require('../utils/polls');
 const { setupGuild } = require('../setup-guild');
 const nlpTrainer = require('../nlp/training/trainer');
 const config = require('../../config.json');
@@ -31,6 +32,11 @@ async function readyHandler(client) {
 		await setupGuild(guild);
 		console.log(`setup guild: ${guild.name}`);
 	}
+
+	// Start poll refreshing for every minute
+	setInterval(async function(){
+		await pollUtils.updatePolls(client);
+	}, 60000)
 
 	console.log('Setting up NLP manager');
 
