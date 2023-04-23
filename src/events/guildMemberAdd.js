@@ -35,6 +35,12 @@ async function guildMemberAddHandler(member) {
 			embeds: [welcomeEmbed],
 		});
 	} catch {}
+
+	if (await database.getGuildSetting(member.guild.id, 'unverified_role_id') !== undefined) {
+		const role = guild.roles.cache.get(await database.getGuildSetting(member.guild.id, 'unverified_role_id'));
+		member.roles.add(role);
+	}
+
 }
 
 module.exports = guildMemberAddHandler;

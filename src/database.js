@@ -13,6 +13,7 @@ async function connect() {
 	await database.run(`CREATE TABLE IF NOT EXISTS server_settings (
 		guild_id TEXT,
 		admin_role_id TEXT,
+		unverified_role_id TEXT,
 		mod_applications_channel_id TEXT,
 		reports_channel_id TEXT,
 		readme_channel_id TEXT,
@@ -44,7 +45,17 @@ async function connect() {
 		expiry_time TEXT,
 		options TEXT,
 		votes TEXT DEFAULT '[0,0,0,0,0]',
-		voters TEXT DEFAULT '[]'
+		voters TEXT DEFAULT '[]',
+		UNIQUE(guild_id, poll_id)
+	)`);
+	
+	await database.run(`CREATE TABLE IF NOT EXISTS rules (
+		guild_id TEXT,
+		id INTEGER PRIMARY KEY,
+		title TEXT,
+		description TEXT,
+		time NUMBER,
+		UNIQUE(guild_id, id)
 	)`);
 }
 
@@ -156,6 +167,38 @@ async function closePoll(pollId) {
 	await database.run('DELETE FROM polls WHERE poll_id=?', [ pollId ]);
 }
 
+async function doesPollExist(pollId) {
+	const poll = await database.get('SELECT COUNT(*) FROM polls WHERE poll_id=? LIMIT 1', [ pollId ]);
+	if (Object.values(poll)[0] === 0) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+async function createRule(guildId, title, description, time) {
+	await database.run('INSERT INTO rules(guild_id, title, description, time) VALUES(?, ?, ?, ?)', 
+	[ guildId, title, description, time ]
+	);
+}
+
+async function updateRule(guildId, id, title, description, time) {
+	await database.run('INSERT OR REPLACE INTO rules(guild_id, id, title, description, time) VALUES(?, ?, ?, ?, ?)', 
+	[ guildId, id, title, description, time ]
+	);
+}
+
+async function getRule(guildId, ruleId) {
+	return (await database.get('SELECT id, title, description, time FROM rules WHERE guild_id=? AND id=?', [ guildId, ruleId ]));
+}
+
+async function getAllRules(guildId) {
+	return (await database.all('SELECT id, title, description, time FROM rules WHERE guild_id=?', [ guildId ]));
+}
+
+async function removeRule(guildId, ruleId) {
+	await database.run('DELETE FROM rules WHERE guild_id=? AND id=?', [ guildId, ruleId ]);
+}
 
 module.exports = {
 	connect,
@@ -172,5 +215,11 @@ module.exports = {
 	votePoll,
 	getPollInfo,
 	getAllPollInfo,
-	closePoll
+	closePoll,
+	doesPollExist,
+	createRule,
+	updateRule,
+	getRule,
+	removeRule,
+	getAllRules
 };

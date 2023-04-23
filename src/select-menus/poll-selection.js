@@ -4,7 +4,7 @@ const database = require('../database');
 const pollSelectMenu = new Discord.SelectMenuBuilder();
 pollSelectMenu.setCustomId('poll-selection');
 pollSelectMenu.setMaxValues(5);
-pollSelectMenu.setPlaceholder('Select a role to toggle');
+pollSelectMenu.setPlaceholder('Select an option');
 
 /**
  *
@@ -15,7 +15,7 @@ async function pollSelectHandler(interaction) {
 		ephemeral: true
 	});
 	
-	const option = interaction.values[0].split('-')[2];
+	const option = interaction.values[0];
 
 	const voted = await database.votePoll(interaction.user.id, interaction.message.id, Number(option));
 	
