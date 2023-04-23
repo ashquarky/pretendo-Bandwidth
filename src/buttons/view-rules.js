@@ -59,6 +59,7 @@ async function viewRulesHandler(interaction) {
 	}
 
 	let time = rule.time;
+	if (time !== 0) {
 	const timer = setInterval(function countdown() {
 		nextButton.setLabel(time === 0 ? 'Next' : `Next (${time})`);
 		nextButton.setDisabled(time === 0 ? false : true);
@@ -77,6 +78,12 @@ async function viewRulesHandler(interaction) {
 		interaction.editReply({components: [row]});
 		return countdown;
 	}(), 1000);
+	} else {
+		if (rules[ruleId + 1] === undefined) {
+			row.setComponents(verifyCompleteButton);
+			interaction.editReply({components: [row]});
+		}
+	}
 }
 
 module.exports = {

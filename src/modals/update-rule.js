@@ -54,7 +54,7 @@ async function updateRuleHandler(interaction) {
 	const description = interaction.fields.getTextInputValue('description').trim();
 	const time = Number(interaction.fields.getTextInputValue('time').trim());
 
-	if (time < 1 || isNaN(time)) {
+	if (time < 0 || isNaN(time)) {
 		await interaction.editReply({
 			content: 'Oops! That isn\'t a valid time number.',
 			ephemeral: true
