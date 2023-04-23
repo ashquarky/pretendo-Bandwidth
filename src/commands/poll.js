@@ -18,7 +18,7 @@ async function pollHandler(interaction) {
 		const optionTextInput = new Discord.TextInputBuilder();
 		optionTextInput.setCustomId(`poll-option-${i}`);
 		optionTextInput.setStyle(Discord.TextInputStyle.Short);
-		optionTextInput.setLabel(`Option ${i}`);
+		optionTextInput.setLabel(`Option ${i + 1}`);
 		optionTextInput.setPlaceholder('Option text');
 		optionTextInput.setMaxLength(55);
 
