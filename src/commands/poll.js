@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 /**
  *
@@ -10,19 +10,19 @@ async function pollHandler(interaction) {
 	const optionsCount = interaction.options.getInteger('options-count');
 	const expiryTime = interaction.options.getInteger('expiry-time') || 0;
 
-	const createPollModal = new ModalBuilder();
+	const createPollModal = new Discord.ModalBuilder();
 	createPollModal.setCustomId(`create-poll-${name}-${optionsCount}-${expiryTime}`);
 	createPollModal.setTitle('Create a poll');
 
 	for (let i = 0; i < optionsCount; i++) {
-		const optionTextInput = new TextInputBuilder();
+		const optionTextInput = new Discord.TextInputBuilder();
 		optionTextInput.setCustomId(`poll-option-${i}`);
 		optionTextInput.setStyle(Discord.TextInputStyle.Short);
 		optionTextInput.setLabel(`Option ${i}`);
 		optionTextInput.setPlaceholder('Option text');
 		optionTextInput.setMaxLength(55);
 
-		const optionActionRow = new ActionRowBuilder();
+		const optionActionRow = new Discord.ActionRowBuilder();
 		optionActionRow.addComponents(optionTextInput);
 
 		createPollModal.addComponents(optionActionRow);

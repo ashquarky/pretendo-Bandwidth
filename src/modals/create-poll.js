@@ -3,8 +3,6 @@ const database = require('../database');
 const pollUtils = require('../utils/polls');
 const { SelectMenuBuilder, ActionRowBuilder } = require('@discordjs/builders');
 
-
-
 const createPollModal = new Discord.ModalBuilder();
 createPollModal.setCustomId('create-poll');
 createPollModal.setTitle('Create a poll');
@@ -14,7 +12,6 @@ createPollModal.setTitle('Create a poll');
  * @param {Discord.ModalSubmitInteraction} interaction
  */
 async function createPollHandler(interaction) {
-
 	const parts = interaction.customId.split('-');
 	const name = parts[2];
 	const optionsCount = parts[3];
@@ -33,7 +30,7 @@ async function createPollHandler(interaction) {
 
 		pollSelectMenu.addOptions({
 			label: optionText,
-			value: `poll-select-${i}`,
+			value: i.toString(),
 		});
 	}
 	

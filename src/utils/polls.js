@@ -13,10 +13,10 @@ async function getPollImage(pollId, status) {
     const { title, options, votes, expiryTime } = await database.getPollInfo(pollId.toString());
     const totalVotes = votes.reduce((partialSum, a) => partialSum + a, 0);
     const topVotedIndex = votes.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
-    const expiryText = expiryTime === 0 ? '' : `Poll expires ${cooldownUtils.getRelativeTime(expiryTime)}`;
+    const expiryText = expiryTime === 0 ? '' : `Poll expires ${cooldownUtils.getRelativeTime(expiryTime)} - `;
     
     // Canvas information
-    const initCanvasHeight = status === PollStatus.Closed ? 145 : 120;
+    const initCanvasHeight = 145;
     const canvas = createCanvas(1200, initCanvasHeight + 100 * options.length);
     const ctx = canvas.getContext("2d");
 
@@ -65,7 +65,7 @@ async function getPollImage(pollId, status) {
     ctx.font = '26px lite';
     ctx.textAlign = "left";
     ctx.fillStyle = "#fff";
-    ctx.fillText(status === PollStatus.Closed ? "This poll has ended." : expiryText, 30, canvas.height - 20);
+    ctx.fillText(`${status === PollStatus.Closed ? "This poll has ended. - " : expiryText}${totalVotes} votes`, 30, canvas.height - 20);
     
     for (const option in options) {
         const margin = 100 * option;
@@ -144,6 +144,10 @@ async function updatePolls(client) {
 }
 
 async function closePoll(message) {
+    if (await database.doesPollExist(message.id) === false) {
+        return;
+    }
+
     const pollImage = await getPollImage(message.id, PollStatus.Closed)
     const attachment = new Discord.AttachmentBuilder(pollImage, {
         name: 'image.png',
