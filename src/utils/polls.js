@@ -168,7 +168,7 @@ const PollStatus = Object.freeze({
 })
 
 module.exports = {
-	getPollImage,
+    getPollImage,
     updatePolls,
     closePoll,
     PollStatus

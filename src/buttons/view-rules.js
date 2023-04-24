@@ -23,8 +23,8 @@ async function viewRulesHandler(interaction) {
 	nextButton.setCustomId(`view-rules-${ruleId + 1}`);
 	nextButton.setLabel(`Next`);
 	nextButton.setStyle('Primary');
-    nextButton.setEmoji('⏩');
-    nextButton.setDisabled(false);
+	nextButton.setEmoji('⏩');
+	nextButton.setDisabled(false);
 
 	const row = new Discord.ActionRowBuilder();
 	row.addComponents(nextButton);
@@ -60,24 +60,24 @@ async function viewRulesHandler(interaction) {
 
 	let time = rule.time;
 	if (time !== 0) {
-	const timer = setInterval(function countdown() {
-		nextButton.setLabel(time === 0 ? 'Next' : `Next (${time})`);
-		nextButton.setDisabled(time === 0 ? false : true);
-		time -= 1;
+		const timer = setInterval(function countdown() {
+			nextButton.setLabel(time === 0 ? 'Next' : `Next (${time})`);
+			nextButton.setDisabled(time === 0 ? false : true);
+			time -= 1;
 
-		row.setComponents(nextButton);
+			row.setComponents(nextButton);
 
-		if(time === -1) { 
-			clearInterval(timer);
-			if (rules[ruleId + 1] === undefined) {
-				row.setComponents(verifyCompleteButton);
-				interaction.editReply({components: [row]});
+			if(time === -1) { 
+				clearInterval(timer);
+				if (rules[ruleId + 1] === undefined) {
+					row.setComponents(verifyCompleteButton);
+					interaction.editReply({components: [row]});
+				}
 			}
-		}
 
-		interaction.editReply({components: [row]});
-		return countdown;
-	}(), 1000);
+			interaction.editReply({components: [row]});
+			return countdown;
+		}(), 1000);
 	} else {
 		if (rules[ruleId + 1] === undefined) {
 			row.setComponents(verifyCompleteButton);

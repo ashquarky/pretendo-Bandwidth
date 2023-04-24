@@ -34,7 +34,7 @@ async function readyHandler(client) {
 	}
 
 	// Start poll refreshing for every minute
-	setInterval(async function(){
+	setInterval(async function() {
 		await pollUtils.updatePolls(client);
 	}, 60000)
 
