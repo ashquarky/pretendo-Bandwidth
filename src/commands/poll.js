@@ -38,7 +38,7 @@ async function pollHandler(interaction) {
 
 const command = new SlashCommandBuilder();
 
-command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator);
+command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.ManageMessages);
 command.setName('poll');
 command.setDescription('Create a new poll');
 command.addStringOption((option) => {

@@ -58,7 +58,7 @@ async function rulesHandler(interaction) {
 
 const command = new SlashCommandBuilder();
 
-command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.ManageMessages);
+command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator);
 command.setName('rule');
 command.setDescription('Change options relating to rules');
 command.addSubcommand((cmd) => {
