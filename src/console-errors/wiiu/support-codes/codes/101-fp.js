@@ -4,7 +4,7 @@ const SupportCode = require('../../../common/support-code');
 module.exports = {
 	'1999': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'9999': new SupportCode('Missing name', 'Missing description', 'An error has occurred.\n\nPlease try again later.\n\nIf the problem persists, please\nmake a note of the error code and\nvisit support.nintendo.com.', 'Missing fix', 'Missing link'),
-	'0000': new SupportCode('SUCCESS', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'0000': new SupportCode('SUCCESS', 'This indicates a success', 'Missing message', 'success', 'Missing link'),
 	'0001': new SupportCode('SESSION_CLOSED', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0010': new SupportCode('PROGRAMMING_ERROR', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0011': new SupportCode('NOT_INITIALIZED', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
