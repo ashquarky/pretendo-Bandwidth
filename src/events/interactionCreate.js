@@ -19,7 +19,7 @@ async function interactionCreateHander(interaction) {
 			await buttonHandler(interaction);
 		}
 
-		if (interaction.isSelectMenu()) {
+		if (interaction.isStringSelectMenu()) {
 			await selectMenuHandler(interaction);
 		}
 
