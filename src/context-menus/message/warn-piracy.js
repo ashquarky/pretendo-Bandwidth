@@ -80,7 +80,7 @@ async function warnPiracyHandler(interaction) {
 	reportEmbed.setTimestamp(Date.now());
 
 	const jumpButton = new Discord.ButtonBuilder()
-	
+
 	jumpButton.setLabel('Jump!')
 	jumpButton.setStyle(Discord.ButtonStyle.Link)
 	jumpButton.setEmoji('📨')

@@ -6,7 +6,7 @@ const database = require('../database');
  * @param {Discord.Guild} guild
  */
 async function updateMemberCountChannels(guild) {
-	
+
 	const memberChannelId = await database.getGuildSetting(guild.id, 'stats_members_channel_id');
 	const peopleChannelId = await database.getGuildSetting(guild.id, 'stats_people_channel_id');
 	const botsChannelId = await database.getGuildSetting(guild.id, 'stats_bots_channel_id');

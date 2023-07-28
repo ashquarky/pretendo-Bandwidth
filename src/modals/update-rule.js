@@ -78,7 +78,7 @@ async function updateRuleHandler(interaction) {
 	confirmRuleUpdateButton.setStyle(Discord.ButtonStyle.Success);
 
 	actionRow.addComponents(confirmRuleUpdateButton);
-	
+
 	await interaction.editReply({
 		embeds: [ruleEmbed],
 		components: [actionRow],

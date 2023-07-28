@@ -39,7 +39,7 @@ async function isInteractionOnCooldown(command, memberId) {
  */
 async function beginCooldown(command, memberId) {
 	const endTime = (new Date(Date.now() + command.cooldown).getTime());
-	
+
 	await database.updateCommandCooldown(memberId, command.name, endTime)
 }
 

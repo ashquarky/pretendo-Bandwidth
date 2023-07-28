@@ -25,7 +25,7 @@ async function createPollHandler(interaction) {
 	const options = [];
 	for (let i = 0; i < optionsCount; i++) {
 		const optionText = interaction.fields.getTextInputValue(`poll-option-${i}`).trim();
-		
+
 		options.push(optionText);
 
 		pollSelectMenu.addOptions({
@@ -33,7 +33,7 @@ async function createPollHandler(interaction) {
 			value: i.toString(),
 		});
 	}
-	
+
 	const row = new ActionRowBuilder();
 	row.addComponents(pollSelectMenu);
 
@@ -42,7 +42,7 @@ async function createPollHandler(interaction) {
 	});
 
 	const message = await interaction.fetchReply();
-	
+
 	await database.createPoll(interaction.guildId, message.id, message.channelId, name, expiryTime, options);
 	const pollImage = await pollUtils.getPollImage(message.id, pollUtils.PollStatus.Initial);
 

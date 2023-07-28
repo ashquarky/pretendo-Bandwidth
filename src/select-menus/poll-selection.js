@@ -14,11 +14,11 @@ async function pollSelectHandler(interaction) {
 	await interaction.deferReply({
 		ephemeral: true
 	});
-	
+
 	const option = interaction.values[0];
 
 	const voted = await database.votePoll(interaction.user.id, interaction.message.id, Number(option));
-	
+
 	if (voted === true) {
 		await interaction.followUp({
 			content: `Your vote has been counted!`,

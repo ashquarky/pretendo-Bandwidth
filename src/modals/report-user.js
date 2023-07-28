@@ -99,7 +99,7 @@ async function reportUserHandler(interaction) {
 	});
 
 	const transcriptButton = new Discord.ButtonBuilder()
-	
+
 	transcriptButton.setLabel('Download Transcript')
 	transcriptButton.setStyle(Discord.ButtonStyle.Link)
 	transcriptButton.setEmoji('📜')

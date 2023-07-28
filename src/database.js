@@ -48,7 +48,7 @@ async function connect() {
 		voters TEXT DEFAULT '[]',
 		UNIQUE(guild_id, poll_id)
 	)`);
-	
+
 	await database.run(`CREATE TABLE IF NOT EXISTS rules (
 		guild_id TEXT,
 		id INTEGER PRIMARY KEY,
@@ -88,7 +88,7 @@ async function disableAutomaticHelp(guildId, memberId) {
 
 async function enabledAutomaticHelp(guildId, memberId) {
 	await database.run('DELETE FROM nlp_disabled WHERE guild_id=? AND member_id=?',
-	[ guildId, memberId ]	
+	[ guildId, memberId ]
 	);
 }
 
@@ -128,7 +128,7 @@ async function votePoll(memberId, pollId, vote) {
 		await database.run(`UPDATE polls SET votes = ?, voters = ? WHERE poll_id=?`,
 		[ JSON.stringify(votes), JSON.stringify(voters), pollId ]
 		);
-		
+	
 		return true;
 	} else {
 		return false;

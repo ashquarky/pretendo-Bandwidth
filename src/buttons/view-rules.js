@@ -12,7 +12,7 @@ viewRulesButton.setStyle(Discord.ButtonStyle.Primary);
  *
  * @param {Discord.ButtonInteraction} interaction
  */
-async function viewRulesHandler(interaction) {	
+async function viewRulesHandler(interaction) {
 	const parts = interaction.customId.split('-');
 	const ruleId = Number(parts[2]) || 0;
 

@@ -32,7 +32,7 @@ async function pollHandler(interaction) {
 		client: interaction.client,
 		interaction: interaction
 	});
-	
+
 	return;
 }
 

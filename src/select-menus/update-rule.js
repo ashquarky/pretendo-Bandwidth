@@ -22,7 +22,7 @@ async function ruleUpdateHandler(interaction) {
 		description = oldRule.description;
 		time = oldRule.time.toString();
 	}
-	
+
 	const titleTextInput = new Discord.TextInputBuilder();
 	titleTextInput.setCustomId('title');
 	titleTextInput.setLabel('Title');
@@ -31,7 +31,7 @@ async function ruleUpdateHandler(interaction) {
 	titleTextInput.setValue(title || '');
 	titleTextInput.setRequired(true);
 	titleTextInput.setMaxLength(50);
-	
+
 	const descriptionTextInput = new Discord.TextInputBuilder();
 	descriptionTextInput.setCustomId('description');
 	descriptionTextInput.setStyle(Discord.TextInputStyle.Paragraph);
@@ -39,7 +39,7 @@ async function ruleUpdateHandler(interaction) {
 	descriptionTextInput.setPlaceholder('Description of the rule');
 	descriptionTextInput.setValue(description || '');
 	descriptionTextInput.setRequired(true);
-	
+
 	const timeTextInput = new Discord.TextInputBuilder();
 	timeTextInput.setCustomId('time');
 	timeTextInput.setLabel('Rule time');
@@ -48,16 +48,16 @@ async function ruleUpdateHandler(interaction) {
 	timeTextInput.setValue(time || '');
 	timeTextInput.setRequired(true);
 	timeTextInput.setMaxLength(2);
-	
+
 	const actionRow1 = new Discord.ActionRowBuilder();
 	actionRow1.addComponents(titleTextInput);
-	
+
 	const actionRow2 = new Discord.ActionRowBuilder();
 	actionRow2.addComponents(descriptionTextInput);
-	
+
 	const actionRow3 = new Discord.ActionRowBuilder();
 	actionRow3.addComponents(timeTextInput);
-	
+
 	const updateRuleModal = new Discord.ModalBuilder();
 	updateRuleModal.setCustomId(`update-rule-${ruleId}`);
 	updateRuleModal.setTitle(`Update Rule`);
