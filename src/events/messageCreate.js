@@ -1,3 +1,4 @@
+const timers = require('node:timers/promises');
 const Discord = require('discord.js');
 const { button: disableNLPButton } = require('../buttons/disable-nlp');
 const { button: expandErrorButton } = require('../buttons/expand-error');
@@ -11,9 +12,11 @@ const ayyRegex = /\bay{1,}\b/gi;
  * @param {Discord.Message} message
  */
 async function messageCreateHandler(message) {
-	if (message.author.bot) return;
+	if (message.author.bot) {
+		return;
+	}
 
-	// ayy => lmaoo
+	// * ayy => lmaoo
 	if (ayyRegex.test(message.content)) {
 		const lmaod = message.content.replaceAll(ayyRegex, (match) => {
 			let newMatch = match.replaceAll('y', 'o').replaceAll('Y', 'O');

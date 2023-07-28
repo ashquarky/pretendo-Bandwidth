@@ -4,6 +4,7 @@ const readyHandler = require('./events/ready');
 const guildMemberAddHandler = require('./events/guildMemberAdd');
 const interactionCreateHandler = require('./events/interactionCreate');
 const messageCreateHandler = require('./events/messageCreate');
+const threadCreateHandler = require('./events/threadCreate');
 const config = require('../config.json');
 
 const client = new Discord.Client({
@@ -27,5 +28,6 @@ client.on(Discord.Events.ClientReady, readyHandler);
 client.on(Discord.Events.GuildMemberAdd, guildMemberAddHandler);
 client.on(Discord.Events.InteractionCreate, interactionCreateHandler);
 client.on(Discord.Events.MessageCreate, messageCreateHandler);
+client.on(Discord.Events.ThreadCreate, threadCreateHandler);
 
 client.login(config.bot_token);
