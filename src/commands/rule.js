@@ -21,7 +21,7 @@ async function rulesHandler(interaction) {
 
 	if (interaction.options.getSubcommand() === 'update' || 'preview' || 'remove') {
 		const rules = await database.getAllRules(guildId);
-		
+
 		if (rules.length === 0) {
 			await interaction.reply({
 				content: 'There are no rules set. Use /rule create to make some.',
@@ -30,11 +30,11 @@ async function rulesHandler(interaction) {
 			return;
 		}
 
-		const ruleSelectMenu = new Discord.SelectMenuBuilder();
+		const ruleSelectMenu = new Discord.StringSelectMenuBuilder();
 		ruleSelectMenu.setCustomId(`${interaction.options.getSubcommand()}-rule-selection`);
 		ruleSelectMenu.setPlaceholder('Select a rule...');
-	
-		for (let i = 0; i < rules.length; i++) {	
+
+		for (let i = 0; i < rules.length; i++) {
 			ruleSelectMenu.addOptions({
 				label: `#${i + 1}: ${rules[i].title}`,
 				value: rules[i].id.toString(),

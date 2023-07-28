@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-const roleSelectMenu = new Discord.SelectMenuBuilder();
+const roleSelectMenu = new Discord.StringSelectMenuBuilder();
 roleSelectMenu.setCustomId('role-self-assign');
 roleSelectMenu.setMaxValues(1);
 roleSelectMenu.setPlaceholder('Select a role to toggle');

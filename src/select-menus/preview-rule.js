@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const database = require('../database');
 
-const previewRuleMenu = new Discord.SelectMenuBuilder();
+const previewRuleMenu = new Discord.StringSelectMenuBuilder();
 previewRuleMenu.setCustomId('preview-rule-selection');
 previewRuleMenu.setMaxValues(5);
 previewRuleMenu.setPlaceholder('Select a rule to preview');

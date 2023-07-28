@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const database = require('../database');
 
-const pollSelectMenu = new Discord.SelectMenuBuilder();
+const pollSelectMenu = new Discord.StringSelectMenuBuilder();
 pollSelectMenu.setCustomId('poll-selection');
 pollSelectMenu.setMaxValues(5);
 pollSelectMenu.setPlaceholder('Select an option');

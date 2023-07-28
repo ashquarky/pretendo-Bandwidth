@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const database = require('../database');
 
-const ruleUpdateMenu = new Discord.SelectMenuBuilder();
+const ruleUpdateMenu = new Discord.StringSelectMenuBuilder();
 ruleUpdateMenu.setCustomId('update-rule-selection');
 ruleUpdateMenu.setMaxValues(5);
 ruleUpdateMenu.setPlaceholder('Select a rule to update');

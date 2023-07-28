@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const database = require('../database');
 const pollUtils = require('../utils/polls');
-const { SelectMenuBuilder, ActionRowBuilder } = require('@discordjs/builders');
+const { StringSelectMenuBuilder, ActionRowBuilder } = require('@discordjs/builders');
 
 const createPollModal = new Discord.ModalBuilder();
 createPollModal.setCustomId('create-poll');
@@ -18,7 +18,7 @@ async function createPollHandler(interaction) {
 	const expiryTime = parts[4];
 
 
-	const pollSelectMenu = new SelectMenuBuilder();
+	const pollSelectMenu = new StringSelectMenuBuilder();
 	pollSelectMenu.setCustomId('poll-selection');
 	pollSelectMenu.setPlaceholder('Cast your vote...');
 

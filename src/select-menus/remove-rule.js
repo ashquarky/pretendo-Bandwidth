@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const database = require('../database');
 
-const removeRuleMenu = new Discord.SelectMenuBuilder();
+const removeRuleMenu = new Discord.StringSelectMenuBuilder();
 removeRuleMenu.setCustomId('remove-rule-selection');
 removeRuleMenu.setMaxValues(5);
 removeRuleMenu.setPlaceholder('Select a rule to remove');
