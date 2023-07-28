@@ -68,52 +68,36 @@ async function getGuildSetting(guildId, name) {
 }
 
 async function updateGuildSetting(guildId, name, value) {
-	await database.run(`UPDATE server_settings SET ${name}=? WHERE guild_id=?`,
-	[ value, guildId ]
-	);
+	await database.run(`UPDATE server_settings SET ${name}=? WHERE guild_id=?`, [ value, guildId ]);
 }
 
 async function checkAutomaticHelpDisabled(guildId, memberId) {
-	const result = await database.get('SELECT EXISTS (SELECT 1 FROM nlp_disabled WHERE guild_id=? AND member_id=? LIMIT 1)',
-	[ guildId, memberId ]
-	);
+	const result = await database.get('SELECT EXISTS (SELECT 1 FROM nlp_disabled WHERE guild_id=? AND member_id=? LIMIT 1)', [ guildId, memberId ]);
 	return Object.values(result)[0]; // * Hack. sqlite returns objects not values, need to get the value from the object
 }
 
 async function disableAutomaticHelp(guildId, memberId) {
-	await database.run('INSERT OR IGNORE INTO nlp_disabled(guild_id, member_id) VALUES(?, ?)',
-	[ guildId, memberId ]
-	);
+	await database.run('INSERT OR IGNORE INTO nlp_disabled(guild_id, member_id) VALUES(?, ?)', [ guildId, memberId ]);
 }
 
 async function enabledAutomaticHelp(guildId, memberId) {
-	await database.run('DELETE FROM nlp_disabled WHERE guild_id=? AND member_id=?',
-	[ guildId, memberId ]
-	);
+	await database.run('DELETE FROM nlp_disabled WHERE guild_id=? AND member_id=?', [ guildId, memberId ]);
 }
 
 async function initMemberCooldown(memberId, commandId) {
-	await database.run('INSERT OR IGNORE INTO command_cooldowns(member_id, command_id, cooldown) VALUES(?, ?, ?)',
-	[ memberId, commandId, 0]
-	);
+	await database.run('INSERT OR IGNORE INTO command_cooldowns(member_id, command_id, cooldown) VALUES(?, ?, ?)', [ memberId, commandId, 0]);
 }
 
 async function updateCommandCooldown(memberId, commandId, cooldown) {
-	await database.run('UPDATE command_cooldowns SET cooldown=? WHERE member_id=? AND command_id=?',
-	[ cooldown, memberId, commandId ]
-	);
+	await database.run('UPDATE command_cooldowns SET cooldown=? WHERE member_id=? AND command_id=?', [ cooldown, memberId, commandId ]);
 }
 
 async function getCommandCooldown(memberId, commandId) {
-	return (await database.get('SELECT cooldown FROM command_cooldowns WHERE member_id=? AND command_id=?',
-	[ memberId, commandId ]
-	))["cooldown"];
+	return (await database.get('SELECT cooldown FROM command_cooldowns WHERE member_id=? AND command_id=?', [ memberId, commandId ]))['cooldown'];
 }
 
 async function createPoll(guildId, pollId, channelId, title, expiryTime, options) {
-	await database.run('INSERT OR IGNORE INTO polls(guild_id, poll_id, channel_id, title, expiry_time, options) VALUES(?, ?, ?, ?, ?, ?)', 
-	[ guildId, pollId, channelId, title, Number(expiryTime.toString().padEnd(13, '0')), JSON.stringify(options)]
-	);
+	await database.run('INSERT OR IGNORE INTO polls(guild_id, poll_id, channel_id, title, expiry_time, options) VALUES(?, ?, ?, ?, ?, ?)',  [ guildId, pollId, channelId, title, Number(expiryTime.toString().padEnd(13, '0')), JSON.stringify(options)]);
 }
 
 async function votePoll(memberId, pollId, vote) {
@@ -125,10 +109,8 @@ async function votePoll(memberId, pollId, vote) {
 		votes[vote] += 1;
 		voters.push(memberId);
 
-		await database.run(`UPDATE polls SET votes = ?, voters = ? WHERE poll_id=?`,
-		[ JSON.stringify(votes), JSON.stringify(voters), pollId ]
-		);
-	
+		await database.run('UPDATE polls SET votes = ?, voters = ? WHERE poll_id=?', [ JSON.stringify(votes), JSON.stringify(voters), pollId ]);
+
 		return true;
 	} else {
 		return false;
@@ -158,9 +140,9 @@ async function getAllPollInfo() {
 		const expiryTime = Number(Object.values(row)[5]);
 
 		polls.push({ pollId, channelId, title, options, votes, expiryTime });
-    });
+	});
 
-	return polls
+	return polls;
 }
 
 async function closePoll(pollId) {
@@ -177,15 +159,11 @@ async function doesPollExist(pollId) {
 }
 
 async function createRule(guildId, title, description, time) {
-	await database.run('INSERT INTO rules(guild_id, title, description, time) VALUES(?, ?, ?, ?)', 
-	[ guildId, title, description, time ]
-	);
+	await database.run('INSERT INTO rules(guild_id, title, description, time) VALUES(?, ?, ?, ?)', [ guildId, title, description, time ]);
 }
 
 async function updateRule(guildId, id, title, description, time) {
-	await database.run('INSERT OR REPLACE INTO rules(guild_id, id, title, description, time) VALUES(?, ?, ?, ?, ?)', 
-	[ guildId, id, title, description, time ]
-	);
+	await database.run('INSERT OR REPLACE INTO rules(guild_id, id, title, description, time) VALUES(?, ?, ?, ?, ?)', [ guildId, id, title, description, time ]);
 }
 
 async function getRule(guildId, ruleId) {

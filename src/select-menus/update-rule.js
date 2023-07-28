@@ -13,7 +13,9 @@ ruleUpdateMenu.setPlaceholder('Select a rule to update');
 async function ruleUpdateHandler(interaction) {
 	const { guildId } = interaction;
 	const ruleId = interaction.values[0];
-	let title, description, time;
+	let title;
+	let description;
+	let time;
 
 	const oldRule = await database.getRule(guildId, ruleId);
 
@@ -60,7 +62,7 @@ async function ruleUpdateHandler(interaction) {
 
 	const updateRuleModal = new Discord.ModalBuilder();
 	updateRuleModal.setCustomId(`update-rule-${ruleId}`);
-	updateRuleModal.setTitle(`Update Rule`);
+	updateRuleModal.setTitle('Update Rule');
 	updateRuleModal.addComponents(actionRow1, actionRow2, actionRow3);
 
 	await interaction.showModal(updateRuleModal, {

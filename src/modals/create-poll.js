@@ -52,7 +52,7 @@ async function createPollHandler(interaction) {
 
 	interaction.editReply({
 		files: [attachment]
-	})
+	});
 }
 
 module.exports = {
