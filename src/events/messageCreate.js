@@ -58,12 +58,12 @@ async function tryAutomaticHelp(message) {
 		// * Send it and bail
 
 		row.addComponents(expandErrorButton);
-		
+
 		const embed = new Discord.EmbedBuilder();
 		embed.setColor(errorCodeEmbed.data.color);
 		embed.setTitle(errorCodeEmbed.data.title);
 		embed.setDescription('Support code detected, press to expand information');
-		
+
 		await message.reply({
 			embeds: [embed],
 			components: [row]
@@ -73,16 +73,16 @@ async function tryAutomaticHelp(message) {
 	}
 
 	// * NLP
-	const response = await message.guild.client.nlpManager.process(message.content);
+	const response = await message.guild.client.aiMessageProcessor.getResponseOrNothing(message.content);
 
-	if (response.intent === 'None' || response.score <= 0.7) {
-		// * Do nothing if no intent found or if the bot is not very sure
+	if (!response) {
+		// * Do nothing if no response was found
+		// * This means either no intent was found or the NLP was not very sure
+		// * "Very sure" is determined by message.guild.client.aiMessageProcessor.classifierThreshold
 		return;
 	}
 
-	let content = response.answer;
-
-	content += '\n\n_This message was detected as needing help using machine learning, and responded to automatically. Was this done in error?\nIf you would like to stop receiving automatic help, use the `Disable Automatic Help` button below, or use the `/toggle-automatic-help` command_';
+	const content = response + '\n\n_This message was detected as needing help using machine learning, and responded to automatically. Was this done in error?\nIf you would like to stop receiving automatic help, use the `Disable Automatic Help` button below, or use the `/toggle-automatic-help` command_';
 
 	row.addComponents(disableNLPButton);
 

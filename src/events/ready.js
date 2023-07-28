@@ -4,8 +4,6 @@ const path = require('path');
 const database = require('../database');
 const pollUtils = require('../utils/polls');
 const { setupGuild } = require('../setup-guild');
-const nlpTrainer = require('../nlp/training/trainer');
-const config = require('../../config.json');
 
 
 /**train
@@ -36,15 +34,7 @@ async function readyHandler(client) {
 	// Start poll refreshing for every minute
 	setInterval(async function() {
 		await pollUtils.updatePolls(client);
-	}, 60000)
-
-	console.log('Setting up NLP manager');
-
-	if (config.nlp.force_train) {
-		await nlpTrainer.train(client.nlpManager);
-	} else {
-		client.nlpManager.load(`${__dirname}/../nlp/training/model.nlp`);
-	}
+	}, 60000);
 
 	console.log(`Logged in as ${client.user.tag}`);
 }

@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const nlpManager = require('./nlp/manager');
+const AIMessageProcessor = require('./nlp/message-processor');
 const readyHandler = require('./events/ready');
 const guildMemberAddHandler = require('./events/guildMemberAdd');
 const interactionCreateHandler = require('./events/interactionCreate');
@@ -15,7 +15,7 @@ const client = new Discord.Client({
 	]
 });
 
-client.nlpManager = nlpManager;
+client.aiMessageProcessor = new AIMessageProcessor();
 
 client.buttons = new Discord.Collection();
 client.commands = new Discord.Collection();
