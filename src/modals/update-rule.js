@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const database = require('../database');
 
 const titleTextInput = new Discord.TextInputBuilder();
 titleTextInput.setCustomId('title');
@@ -34,8 +33,8 @@ const actionRow3 = new Discord.ActionRowBuilder();
 actionRow3.addComponents(timeTextInput);
 
 const updateRuleModal = new Discord.ModalBuilder();
-updateRuleModal.setCustomId(`update-rule`);
-updateRuleModal.setTitle(`Create Rule`);
+updateRuleModal.setCustomId('update-rule');
+updateRuleModal.setTitle('Create Rule');
 updateRuleModal.addComponents(actionRow1, actionRow2, actionRow3);
 
 /**

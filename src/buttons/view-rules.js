@@ -21,7 +21,7 @@ async function viewRulesHandler(interaction) {
 
 	const nextButton = new Discord.ButtonBuilder();
 	nextButton.setCustomId(`view-rules-${ruleId + 1}`);
-	nextButton.setLabel(`Next`);
+	nextButton.setLabel('Next');
 	nextButton.setStyle('Primary');
 	nextButton.setEmoji('⏩');
 	nextButton.setDisabled(false);
@@ -39,7 +39,7 @@ async function viewRulesHandler(interaction) {
 		return;
 	}
 
-	ruleEmbed = new Discord.EmbedBuilder();
+	const ruleEmbed = new Discord.EmbedBuilder();
 	ruleEmbed.setColor(0x9D6FF3);
 	ruleEmbed.setTitle(`Rule ${ruleId + 1}: ${rule.title}`);
 	ruleEmbed.setDescription(rule.description);

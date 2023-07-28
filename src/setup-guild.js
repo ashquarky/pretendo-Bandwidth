@@ -30,7 +30,7 @@ async function setupGuild(guild) {
 	// Set up our timer for refreshing the member count (5 minutes)
 	setInterval(async function(){
 		await timedUtils.updateMemberCountChannels(guild);
-   }, 300000)
+	}, 300000);
 
 	await database.initGuild(guild.id);
 }

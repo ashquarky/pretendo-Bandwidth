@@ -58,7 +58,7 @@ async function denyModApplicationHandler(interaction) {
 	const deniedApplicationEmbed = new Discord.EmbedBuilder();
 	deniedApplicationEmbed.setColor(0xF36F8A);
 	deniedApplicationEmbed.setTitle('Mod Application Denied');
-	deniedApplicationEmbed.setDescription(`Your moderator application has been denied.`);
+	deniedApplicationEmbed.setDescription('Your moderator application has been denied.');
 	deniedApplicationEmbed.setFields([{
 		name: 'Reason',
 		value: interaction.fields.getTextInputValue('reason') || 'No reason given.'

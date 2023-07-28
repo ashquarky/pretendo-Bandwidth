@@ -21,12 +21,12 @@ async function pollSelectHandler(interaction) {
 
 	if (voted === true) {
 		await interaction.followUp({
-			content: `Your vote has been counted!`,
+			content: 'Your vote has been counted!',
 			ephemeral: true
 		});
 	} else {
 		await interaction.followUp({
-			content: `Sorry, you've already voted on this poll!`,
+			content: 'Sorry, you\'ve already voted on this poll!',
 			ephemeral: true
 		});
 	}

@@ -12,7 +12,7 @@ const PRETENDO_SUPPORT_CODE_REGEX = /(\b678-\d{4}\b|\b598-\d{4}\b)/gm; // * 678 
  *
  * @param {String}} message
  */
- function checkForErrorCode(text) {
+function checkForErrorCode(text) {
 	// TODO - WiiU error codes, 3DS error codes
 
 	// * Run this check first to avoid WiiU conflicts

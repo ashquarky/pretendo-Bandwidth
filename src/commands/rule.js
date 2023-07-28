@@ -9,7 +9,7 @@ const { modal: updateRuleModal } = require('../modals/update-rule');
  */
 async function rulesHandler(interaction) {
 	const { guildId } = interaction;
-	const ruleNumber = interaction.options.getInteger('rule-number');
+	//const ruleNumber = interaction.options.getInteger('rule-number');
 
 	if (interaction.options.getSubcommand() === 'create') {
 		interaction.showModal(updateRuleModal, {
@@ -19,7 +19,7 @@ async function rulesHandler(interaction) {
 		return;
 	}
 
-	if (interaction.options.getSubcommand() === 'update' || 'preview' || 'remove') {
+	if (['update', 'preview', 'remove'].includes(interaction.options.getSubcommand())) {
 		const rules = await database.getAllRules(guildId);
 
 		if (rules.length === 0) {

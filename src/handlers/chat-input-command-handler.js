@@ -11,7 +11,7 @@ async function chatInputCommandHandler(interaction) {
 	/** @type {Discord.Collection} */
 	const commands = interaction.client.commands;
 	const command = commands.get(commandName);
-	const memberId = interaction.member.id
+	const memberId = interaction.member.id;
 
 	// do nothing if no command
 	if (!command) {
@@ -19,19 +19,19 @@ async function chatInputCommandHandler(interaction) {
 	}
 
 	// check for cooldown and run the command
-	const cooldown = await cooldownUtils.isInteractionOnCooldown(command, memberId)
+	const cooldown = await cooldownUtils.isInteractionOnCooldown(command, memberId);
 	if (!cooldown) {
 		await command.handler(interaction);
 		if (command.cooldown) { 
 			cooldownUtils.beginCooldown(command, memberId);
 		}
 	} else {
-	await interaction.reply(
-		{
-			embeds: [cooldown],
-			ephemeral: true
-		}
-	);
+		await interaction.reply(
+			{
+				embeds: [cooldown],
+				ephemeral: true
+			}
+		);
 	}
 }
 

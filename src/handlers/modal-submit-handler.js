@@ -11,7 +11,7 @@ async function modalSubmitHandler(interaction) {
 
 	const modals = interaction.client.modals;
 	const modal = modals.find(modal => customId.startsWith(modal.name)); // hack to be able to append extra metadata to modals
-	const memberId = interaction.member.id
+	const memberId = interaction.member.id;
 
 	// do nothing if no modal
 	if (!modal) {
@@ -19,19 +19,19 @@ async function modalSubmitHandler(interaction) {
 	}
 
 	// check for cooldown and run the modal
-	const cooldown = await cooldownUtils.isInteractionOnCooldown(modal, memberId)
+	const cooldown = await cooldownUtils.isInteractionOnCooldown(modal, memberId);
 	if (!cooldown) {
 		await modal.handler(interaction);
 		if (modal.cooldown) {
 			cooldownUtils.beginCooldown(modal, memberId);
 		}
 	} else {
-	await interaction.reply(
-		{
-			embeds: [cooldown],
-			ephemeral: true
-		}
-	);
+		await interaction.reply(
+			{
+				embeds: [cooldown],
+				ephemeral: true
+			}
+		);
 	}
 }
 

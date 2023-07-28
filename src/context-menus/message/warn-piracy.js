@@ -79,11 +79,11 @@ async function warnPiracyHandler(interaction) {
 	});
 	reportEmbed.setTimestamp(Date.now());
 
-	const jumpButton = new Discord.ButtonBuilder()
+	const jumpButton = new Discord.ButtonBuilder();
 
-	jumpButton.setLabel('Jump!')
-	jumpButton.setStyle(Discord.ButtonStyle.Link)
-	jumpButton.setEmoji('📨')
+	jumpButton.setLabel('Jump!');
+	jumpButton.setStyle(Discord.ButtonStyle.Link);
+	jumpButton.setEmoji('📨');
 	jumpButton.setURL(message.url);
 
 	const row = new Discord.ActionRowBuilder();

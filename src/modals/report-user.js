@@ -98,11 +98,11 @@ async function reportUserHandler(interaction) {
 		files: [transcript]
 	});
 
-	const transcriptButton = new Discord.ButtonBuilder()
+	const transcriptButton = new Discord.ButtonBuilder();
 
-	transcriptButton.setLabel('Download Transcript')
-	transcriptButton.setStyle(Discord.ButtonStyle.Link)
-	transcriptButton.setEmoji('📜')
+	transcriptButton.setLabel('Download Transcript');
+	transcriptButton.setStyle(Discord.ButtonStyle.Link);
+	transcriptButton.setEmoji('📜');
 	transcriptButton.setURL(message.attachments.first().url);
 
 	const row = new Discord.ActionRowBuilder();

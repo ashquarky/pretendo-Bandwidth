@@ -25,7 +25,7 @@ async function confirmRuleUpdateHandler(interaction) {
 	}
 
 	interaction.reply({
-		content: `Rule updated!`,
+		content: 'Rule updated!',
 		ephemeral: true
 	});
 }
