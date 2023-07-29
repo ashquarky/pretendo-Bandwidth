@@ -1,7 +1,15 @@
 const SupportCode = require('../../../common/support-code');
 
-// TODO - Reorder these
 module.exports = {
+	'0500': new SupportCode('Missing name', 'Missing description', 'No Internet connection has been set up.\n\nPlease set up an Internet connection\nin System Settings ⇒ Internet.', 'Missing fix', 'Missing link'),
+	'0501': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'0502': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'0503': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'0504': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'0505': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'0506': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'0507': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'0599': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'1000': new SupportCode('Missing name', 'Missing description', 'Unable to find a Wi-Fi network.\n\nPlease confirm that your Wi-Fi\nnetwork is set up for use and that\nthe SSID has been set correctly.\nYou can check the Wii U SSID\nsettings under the Internet option\nin System Settings.\n\nIf the Wi-Fi network is secured using\nWEP, the security key you entered\nmay be incorrect.\n\nUnplug your wireless router from the\npower outlet. After a little while, plug\nit back in and try again.\n\nMake sure the Wii U console is within\nrange of your wireless router.\n\nMove any electronics away from the\nWii U console and your wireless\nrouter.\n\nTry changing the wireless channel\nwithin the settings of your wireless\nrouter.\n\nIf you are unable to access or change\nyour wireless-router settings, please\ncontact the manufacturer for support.\n\nIf the problem persists, please visit\nsupport.nintendo.com.', 'Missing fix', 'Missing link'),
 	'1001': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'1002': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
@@ -94,13 +102,4 @@ module.exports = {
 	'5007': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'5099': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'9999': new SupportCode('Missing name', 'Missing description', 'A communication error has occurred.\n\nIf the problem persists, please\nvisit support.nintendo.com.', 'Missing fix', 'Missing link'),
-	'0504': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'0505': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'0506': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'0507': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'0599': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'0500': new SupportCode('Missing name', 'Missing description', 'No Internet connection has been set up.\n\nPlease set up an Internet connection\nin System Settings ⇒ Internet.', 'Missing fix', 'Missing link'),
-	'0501': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'0502': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'0503': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 };

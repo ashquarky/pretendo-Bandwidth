@@ -1,10 +1,7 @@
 const SupportCode = require('../../../common/support-code');
 
-// TODO - Reorder these
 module.exports = {
-	'1999': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'9999': new SupportCode('Missing name', 'Missing description', 'An error has occurred.\n\nPlease try again later.\n\nIf the problem persists, please\nmake a note of the error code and\nvisit support.nintendo.com.', 'Missing fix', 'Missing link'),
-	'0000': new SupportCode('SUCCESS', 'This indicates a success', 'Missing message', 'success', 'Missing link'),
+	'0000': new SupportCode('SUCCESS', 'This indicates a success', 'Missing message', 'Success', 'Missing link'),
 	'0001': new SupportCode('SESSION_CLOSED', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0010': new SupportCode('PROGRAMMING_ERROR', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0011': new SupportCode('NOT_INITIALIZED', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
@@ -175,4 +172,6 @@ module.exports = {
 	'0811': new SupportCode('AUTHENTICATION_UNDER_MAINTENANCE', 'Missing description', 'Due to server maintenance, the service\nyou attempted to access is not available\nat this time.\n\nPlease try again later.', 'Missing fix', 'Missing link'),
 	'0812': new SupportCode('AUTHENTICATION_UNSUPPORTED_VERSION', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0813': new SupportCode('AUTHENTICATION_UNKNOWN', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'1999': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'9999': new SupportCode('Missing name', 'Missing description', 'An error has occurred.\n\nPlease try again later.\n\nIf the problem persists, please\nmake a note of the error code and\nvisit support.nintendo.com.', 'Missing fix', 'Missing link'),
 };
