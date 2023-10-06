@@ -66,15 +66,15 @@ function getRelativeTime(timestamp) {
 	}
 
 	else if (elapsed < msPerMonth) {
-		return `in ${Math.round(elapsed/msPerDay)} day(s)`;   
+		return `in ${Math.round(elapsed/msPerDay)} day(s)`;
 	}
 
 	else if (elapsed < msPerYear) {
-		return `in ${Math.round(elapsed/msPerMonth)} month(s)`;   
+		return `in ${Math.round(elapsed/msPerMonth)} month(s)`;
 	}
 
 	else {
-		return `in ${Math.round(elapsed/msPerYear)} year(s)`;   
+		return `in ${Math.round(elapsed/msPerYear)} year(s)`;
 	}
 }
 

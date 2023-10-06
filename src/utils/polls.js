@@ -146,7 +146,7 @@ async function closePoll(message) {
 	const attachment = new Discord.AttachmentBuilder(pollImage, {
 		name: 'image.png',
 	});
-    
+
 	message.edit({
 		files: [attachment],
 		components: []

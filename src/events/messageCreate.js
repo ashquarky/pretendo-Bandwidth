@@ -1,8 +1,9 @@
-const timers = require('node:timers/promises');
 const Discord = require('discord.js');
+const { lookpath } = require('lookpath');
 const { button: disableNLPButton } = require('../buttons/disable-nlp');
 const { button: expandErrorButton } = require('../buttons/expand-error');
 const errorCodeUtils = require('../utils/errorCode');
+const { networkDumpsConverter } = require('../utils/network-dumps-converter');
 const database = require('../database');
 
 const ayyRegex = /\bay{1,}\b/gi;
@@ -33,19 +34,25 @@ async function messageCreateHandler(message) {
 		} else {
 			await message.reply('Looks like the resulting message is too long :/');
 		}
-
-		return;
 	}
 
 	// * Check if automatic help is disabled
 	const isHelpDisabled = await database.checkAutomaticHelpDisabled(message.guildId, message.member.id);
 
-	if (isHelpDisabled) {
-		// * Bail if automatic help is disabled
-		return;
+	if (!isHelpDisabled) {
+		// * Only do automatic help if not disabled
+		await tryAutomaticHelp(message);
 	}
 
-	await tryAutomaticHelp(message);
+	// TODO - Make a better config system to track enabled features at boot
+	if (await lookpath('charles')) {
+		try {
+			await networkDumpsConverter(message);
+		} catch (e) {
+			// * Silently ignore for now
+			console.log(e);
+		}
+	}
 }
 
 /**
