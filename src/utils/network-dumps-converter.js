@@ -127,7 +127,7 @@ async function networkDumpsConverter(message) {
 		const charlesJSONSummary = await fs.readJSON(charlesJSONSummaryPath);
 
 		// TODO - Are there more requests/responses to scrub?
-		for (const { request, response, path: requestPath } of charlesJSONSummary) {
+		for (const { request, response, host, path: requestPath } of charlesJSONSummary) {
 			for (const header of request.header.headers) {
 				if (HEADERS_TO_SCRUB.includes(header.name.toLowerCase())) {
 					header.value = 'REMOVED';
@@ -140,40 +140,89 @@ async function networkDumpsConverter(message) {
 				}
 			}
 
-			// * Remove NNID/PNID password and refresh token from request
-			// * Remove access and refresh token from response
-			if (requestPath === '/v1/api/oauth20/access_token/generate') {
-				const newRequestBody = querystring.parse(request.body.text);
+			if (host === 'account.nintendo.net' || host === 'account.pretendo.cc') {
+				// * Remove NNID/PNID password and refresh token from request
+				// * Remove access and refresh token from response
+				if (requestPath === '/v1/api/oauth20/access_token/generate') {
+					const newRequestBody = querystring.parse(request.body.text);
 
-				if (newRequestBody.password) {
-					newRequestBody.password = 'REMOVED';
+					if (newRequestBody.password) {
+						newRequestBody.password = 'REMOVED';
+					}
+
+					if (newRequestBody.refresh_token) {
+						newRequestBody.refresh_token = 'REMOVED';
+					}
+
+					request.body.text = querystring.stringify(newRequestBody);
+
+					response.body.text = response.body.text.replace(/<token>.*<\/token>/, '<token>REMOVED</token>');
+					response.body.text = response.body.text.replace(/<refresh_token>.*<\/refresh_token>/, '<refresh_token>REMOVED</refresh_token>');
 				}
 
-				if (newRequestBody.refresh_token) {
-					newRequestBody.refresh_token = 'REMOVED';
+				// * Remove birthday and email address from account details
+				if (requestPath === '/v1/api/people/@me/profile') {
+					response.body.text = response.body.text.replace(/<address>.*<\/address>/, '<address>removed@email.com</address>');
+					response.body.text = response.body.text.replace(/<birth_date>.*<\/birth_date>/, '<birth_date>YYYY-MM-DD</birth_date>');
 				}
 
-				request.body.text = querystring.stringify(newRequestBody);
+				// * Remove service token
+				if (requestPath === '/v1/api/provider/service_token/@me') {
+					response.body.text = response.body.text.replace(/<token>.*<\/token>/, '<token>REMOVED</token>');
+				}
 
-				response.body.text = response.body.text.replace(/<token>.*<\/token>/, '<token>REMOVED</token>');
-				response.body.text = response.body.text.replace(/<refresh_token>.*<\/refresh_token>/, '<refresh_token>REMOVED</refresh_token>');
+				// * Remove NEX token and password
+				if (requestPath === '/v1/api/provider/nex_token/@me') {
+					response.body.text = response.body.text.replace(/<token>.*<\/token>/, '<token>REMOVED</token>');
+					response.body.text = response.body.text.replace(/<nex_password>.*<\/nex_password>/, '<nex_password>REMOVED</nex_password>');
+				}
 			}
 
-			// * Remove birthday and email address from account details
-			if (requestPath === '/v1/api/people/@me/profile') {
-				response.body.text = response.body.text.replace(/<address>.*<\/address>/, '<address>removed@email.com</address>');
-				response.body.text = response.body.text.replace(/<birth_date>.*<\/birth_date>/, '<birth_date>YYYY-MM-DD</birth_date>');
-			}
+			if (host === 'nasc.nintendowifi.net' || host === 'nasc.pretendo.cc') {
+				if (requestPath === '/ac') {
+					const newRequestBody = querystring.parse(request.body.text);
 
-			// * Remove service token
-			if (requestPath === '/v1/api/provider/service_token/@me') {
-				response.body.text = response.body.text.replace(/<token>.*<\/token>/, '<token>REMOVED</token>');
-			}
+					// * Remove certificate (LocalFriendCodeSeed_B)
+					if (newRequestBody.fcdcert) {
+						newRequestBody.fcdcert = 'REMOVED';
+					}
 
-			// * Remove NEX token and password
-			if (requestPath === '/v1/api/provider/nex_token/@me') {
-				response.body.text = response.body.text.replace(/<token>.*<\/token>/, '<token>REMOVED</token>');
-				response.body.text = response.body.text.replace(/<nex_password>.*<\/nex_password>/, '<nex_password>REMOVED</nex_password>');
+					// * Remove serial number
+					if (newRequestBody.csnum) {
+						newRequestBody.csnum = 'REMOVED';
+					}
+
+					// * Remove MAC address
+					if (newRequestBody.macadr) {
+						newRequestBody.macadr = 'REMOVED';
+					}
+
+					// * Remove BSSID
+					if (newRequestBody.bssid) {
+						newRequestBody.bssid = 'REMOVED';
+					}
+
+					// * Remove NEX password
+					// * Only seen if the device has never been online
+					if (newRequestBody.passwd) {
+						newRequestBody.passwd = 'REMOVED';
+					}
+
+					const newResponseBody = querystring.parse(response.body.text);
+
+					// * Remove NEX token
+					if (newResponseBody.token) {
+						newResponseBody.token = 'REMOVED';
+					}
+
+					// * Remove service token
+					if (newResponseBody.servicetoken) {
+						newResponseBody.servicetoken = 'REMOVED';
+					}
+
+					request.body.text = querystring.stringify(newRequestBody);
+					response.body.text = querystring.stringify(newResponseBody);
+				}
 			}
 		}
 
