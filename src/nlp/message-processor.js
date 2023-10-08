@@ -6,8 +6,8 @@ const trainingDataDir = `${__dirname}/training-data`;
 
 class AIMessageProcessor {
 	constructor() {
-		this.classifierThreshold = 0.8;
-		this.cldThreshold = 80;
+		this.classifierThreshold = 1;
+		this.cldThreshold = 100;
 		this.classifiers = {};
 		this.answers = {};
 
