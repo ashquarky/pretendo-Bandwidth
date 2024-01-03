@@ -14,6 +14,7 @@ async function connect() {
 		guild_id TEXT,
 		admin_role_id TEXT,
 		unverified_role_id TEXT,
+		developer_role_id TEXT,
 		mod_applications_channel_id TEXT,
 		reports_channel_id TEXT,
 		readme_channel_id TEXT,
@@ -21,6 +22,7 @@ async function connect() {
 		stats_members_channel_id TEXT,
 		stats_people_channel_id TEXT,
 		stats_bots_channel_id TEXT,
+		uploaded_network_dumps_channel_id TEXT,
 		UNIQUE(guild_id)
 	)`);
 

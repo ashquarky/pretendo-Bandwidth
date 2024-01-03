@@ -5,6 +5,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const editableOptions = [
 	'admin_role_id',
 	'unverified_role_id',
+	'developer_role_id',
 	'mod_applications_channel_id',
 	'reports_channel_id',
 	'readme_channel_id',
@@ -12,6 +13,7 @@ const editableOptions = [
 	'stats_members_channel_id',
 	'stats_people_channel_id',
 	'stats_bots_channel_id',
+	'uploaded_network_dumps_channel_id',
 ];
 
 async function verifyInputtedKey(interaction) {
@@ -40,7 +42,7 @@ async function settingsHandler(interaction) {
 				'```\n' + key + '=' + '\'' + `${value}` + '\'' + '\n```',
 			ephemeral: true,
 			allowedMentions: {
-				parse: [], // dont allow tagging anything
+				parse: [], // * Dont allow tagging anything
 			},
 		});
 		return;
