@@ -26,7 +26,7 @@ async function toggleroleHandler(interaction) {
 	}
 
 	const hasRole = member.roles.cache.has(role.id);
-	
+
 	if (hasRole) {
 		await member.roles.remove(role);
 	} else {

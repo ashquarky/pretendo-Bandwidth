@@ -1,8 +1,8 @@
-const timers = require('node:timers/promises');
 const Discord = require('discord.js');
 const { button: disableNLPButton } = require('../buttons/disable-nlp');
 const { button: expandErrorButton } = require('../buttons/expand-error');
 const errorCodeUtils = require('../utils/errorCode');
+const { networkDumpsUploader } = require('../utils/network-dumps-upload');
 const database = require('../database');
 
 const ayyRegex = /\bay{1,}\b/gi;
@@ -16,36 +16,37 @@ async function messageCreateHandler(message) {
 		return;
 	}
 
-	// * ayy => lmaoo
-	if (ayyRegex.test(message.content)) {
-		const lmaod = message.content.replaceAll(ayyRegex, (match) => {
-			let newMatch = match.replaceAll('y', 'o').replaceAll('Y', 'O');
-			newMatch = newMatch.replaceAll('a', 'lma').replaceAll('A', 'LMA');
-			return newMatch;
-		});
-
-		// Check that the message isn't too long to be sent
-		if (lmaod.length < 2000) {
-			await message.reply({
-				content: lmaod,
-				allowedMentions: { parse: [] }
+	// * Message was sent in the guild
+	if (!(message.channel instanceof Discord.DMChannel)) {
+		// * ayy => lmaoo
+		if (ayyRegex.test(message.content)) {
+			const lmaod = message.content.replaceAll(ayyRegex, (match) => {
+				let newMatch = match.replaceAll('y', 'o').replaceAll('Y', 'O');
+				newMatch = newMatch.replaceAll('a', 'lma').replaceAll('A', 'LMA');
+				return newMatch;
 			});
-		} else {
-			await message.reply('Looks like the resulting message is too long :/');
+
+			// * Check that the message isn't too long to be sent
+			if (lmaod.length < 2000) {
+				await message.reply({
+					content: lmaod,
+					allowedMentions: { parse: [] }
+				});
+			} else {
+				await message.reply('Looks like the resulting message is too long :/');
+			}
 		}
 
-		return;
+		// * Check if automatic help is disabled
+		const isHelpDisabled = await database.checkAutomaticHelpDisabled(message.guildId, message.member.id);
+
+		if (!isHelpDisabled) {
+			// * Only do automatic help if not disabled
+			await tryAutomaticHelp(message);
+		}
+
+		await networkDumpsUploader(message);
 	}
-
-	// * Check if automatic help is disabled
-	const isHelpDisabled = await database.checkAutomaticHelpDisabled(message.guildId, message.member.id);
-
-	if (isHelpDisabled) {
-		// * Bail if automatic help is disabled
-		return;
-	}
-
-	await tryAutomaticHelp(message);
 }
 
 /**
