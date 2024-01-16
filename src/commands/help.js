@@ -71,6 +71,7 @@ command.addStringOption(option => {
 		{ name: '/help', value: 'commands:help' },
 		{ name: '/mod-application', value: 'commands:mod-application' },
 		{ name: '/togglerole', value: 'commands:togglerole' },
+		{ name: '/upload-network-dump', value: 'commands:upload-network-dump' },
 		{ name: 'Report User', value: 'contextMenus:Report User' },
 		{ name: 'Warn Piracy', value: 'contextMenus:Warn Piracy' }
 	);

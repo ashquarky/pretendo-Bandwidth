@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const { button: disableNLPButton } = require('../buttons/disable-nlp');
 const { button: expandErrorButton } = require('../buttons/expand-error');
 const errorCodeUtils = require('../utils/errorCode');
-const { networkDumpsUploader } = require('../utils/network-dumps-upload');
 const database = require('../database');
 
 const ayyRegex = /\bay{1,}\b/gi;
@@ -44,8 +43,6 @@ async function messageCreateHandler(message) {
 			// * Only do automatic help if not disabled
 			await tryAutomaticHelp(message);
 		}
-
-		await networkDumpsUploader(message);
 	}
 }
 
