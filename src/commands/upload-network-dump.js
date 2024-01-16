@@ -37,7 +37,7 @@ async function uploadNetworkDumpHandler(interaction) {
 			result = await hokakuPCAPHandler(interaction);
 			break;
 		case 'http':
-			result = await hokakuHTTPHandler(interaction);
+			result = await proxyHandler(interaction);
 			break;
 		default:
 			throw new Error(`Unhandled subcommand ${subcommand}`);
@@ -216,7 +216,7 @@ async function hokakuPCAPHandler(interaction) {
  *
  * @param {Discord.CommandInteraction} interaction
  */
-async function hokakuHTTPHandler(interaction) {
+async function proxyHandler(interaction) {
 	const dump = interaction.options.getAttachment('dump');
 	const description = interaction.options.getString('description');
 
