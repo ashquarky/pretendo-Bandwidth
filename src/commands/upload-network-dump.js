@@ -5,6 +5,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const HOKAKU_CAFE_DEFAULT_PCAP_NAME_REGEX = /\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}\.(?:pcapng|pcap)/;
 const HOKAKU_CAFE_BIN_NAME_REGEX = /nexServiceToken-\d{10}-[\dA-f]{8}\.bin/;
+const HOKAKU_CTR_DEFAULT_PCAP_NAME_REGEX = /\d{6}_\d{6}\.(?:pcapng|pcap)/;
 const MITMPROXY_NINTENDO_DEFAULT_NAME_REGEX = /(?:wiiu|3ds)-latest\.(?:har|chls|chlsj|chlsx|saz)/;
 
 /**
@@ -150,6 +151,15 @@ async function hokakuCTRHandler(interaction) {
 	if (dumpFileExtension !== '.pcap') {
 		await interaction.reply({
 			content: `Invalid dump file type. Expected pcap, got ${dumpFileExtension}`,
+			ephemeral: true
+		});
+
+		return;
+	}
+
+	if (dump.name.match(HOKAKU_CTR_DEFAULT_PCAP_NAME_REGEX)) {
+		await interaction.reply({
+			content: 'Uses default HokakuCTR pcap file name. Please change the name to something more descriptive',
 			ephemeral: true
 		});
 
