@@ -13,18 +13,20 @@ const MITMPROXY_NINTENDO_DEFAULT_NAME_REGEX = /(?:wiiu|3ds)-latest\.har/;
  * @param {Discord.CommandInteraction} interaction
  */
 async function uploadNetworkDumpHandler(interaction) {
-	const description = interaction.options.getString('description');
-	if (description.trim().length < 10) {
-		await interaction.reply({
-			content: 'Please use a longer description',
-			ephemeral: true
-		});
-
-		return;
-	}
-
 	const subcommand = interaction.options.getSubcommand();
 	let result;
+
+	if (subcommand !== 'boss-database-wiiu' && subcommand !== 'boss-database-3ds') {
+		const description = interaction.options.getString('description');
+		if (description.trim().length < 10) {
+			await interaction.reply({
+				content: 'Please use a longer description',
+				ephemeral: true
+			});
+
+			return;
+		}
+	}
 
 	switch (subcommand) {
 		case 'hokakucafe':
@@ -38,6 +40,12 @@ async function uploadNetworkDumpHandler(interaction) {
 			break;
 		case 'http':
 			result = await proxyHandler(interaction);
+			break;
+		case 'boss-database-wiiu':
+			result = await bossTaskDatabaseWiiUHandler(interaction);
+			break;
+		case 'boss-database-3ds':
+			result = await bossTaskDatabase3DSHandler(interaction);
 			break;
 		default:
 			throw new Error(`Unhandled subcommand ${subcommand}`);
@@ -254,6 +262,54 @@ async function proxyHandler(interaction) {
 	};
 }
 
+/**
+ *
+ * @param {Discord.CommandInteraction} interaction
+ */
+async function bossTaskDatabaseWiiUHandler(interaction) {
+	const database = interaction.options.getAttachment('task-db');
+
+	if (database.name !== 'task.db') {
+		await interaction.reply({
+			content: `Invalid task database. Expected task.db, got ${database.name}`,
+			ephemeral: true
+		});
+
+		return;
+	}
+
+	return {
+		attachments: [
+			database
+		],
+		message: `<@${interaction.member.id}> Uploaded a Wii U BOSS task database`
+	};
+}
+
+/**
+ *
+ * @param {Discord.CommandInteraction} interaction
+ */
+async function bossTaskDatabase3DSHandler(interaction) {
+	const partition = interaction.options.getAttachment('partition');
+
+	if (!partition.name.startsWith('partition') || partition.name.startsWith('.bin')) {
+		await interaction.reply({
+			content: `Invalid save partition. 3DS BOSS save partition names start with "partition", followed by some letter (usually A), and use the .bin extension. Got ${partition.name}`,
+			ephemeral: true
+		});
+
+		return;
+	}
+
+	return {
+		attachments: [
+			partition
+		],
+		message: `<@${interaction.member.id}> Uploaded a 3DS BOSS task database`
+	};
+}
+
 const command = new SlashCommandBuilder();
 
 command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.SendMessages);
@@ -353,6 +409,32 @@ command.addSubcommand((cmd) => {
 	cmd.addStringOption((option) => {
 		option.setName('description');
 		option.setDescription('Detailed description of what happened during the session');
+		option.setRequired(true);
+
+		return option;
+	});
+
+	return cmd;
+});
+command.addSubcommand((cmd) => {
+	cmd.setName('boss-database-wiiu');
+	cmd.setDescription('Upload a Wii U BOSS task database');
+	cmd.addAttachmentOption((option) => {
+		option.setName('task-db');
+		option.setDescription('The BOSS task database');
+		option.setRequired(true);
+
+		return option;
+	});
+
+	return cmd;
+});
+command.addSubcommand((cmd) => {
+	cmd.setName('boss-database-3ds');
+	cmd.setDescription('Upload a 3DS BOSS task database');
+	cmd.addAttachmentOption((option) => {
+		option.setName('partition');
+		option.setDescription('The BOSS database save partition. Usually named "PartitionA.bin"');
 		option.setRequired(true);
 
 		return option;
