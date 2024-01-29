@@ -13,13 +13,17 @@ const MITMPROXY_NINTENDO_DEFAULT_NAME_REGEX = /(?:wiiu|3ds)-latest\.har/;
  * @param {Discord.CommandInteraction} interaction
  */
 async function uploadNetworkDumpHandler(interaction) {
+	await interaction.deferReply({
+		ephemeral: true
+	});
+
 	const subcommand = interaction.options.getSubcommand();
 	let result;
 
 	if (subcommand !== 'boss-database-wiiu' && subcommand !== 'boss-database-3ds') {
 		const description = interaction.options.getString('description');
 		if (description.trim().length < 10) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'Please use a longer description',
 				ephemeral: true
 			});
@@ -59,7 +63,7 @@ async function uploadNetworkDumpHandler(interaction) {
 	const uploadedDumpsChannel = interaction.guild.channels.cache.get(uploadedDumpsChannelId);
 
 	if (!uploadedDumpsChannel) {
-		await interaction.reply({
+		await interaction.editReply({
 			content: 'The channel to submit them to has not been found. Please contact a developer immediately.',
 			ephemeral: true
 		});
@@ -76,7 +80,7 @@ async function uploadNetworkDumpHandler(interaction) {
 			}))
 		});
 	} catch (error) {
-		await interaction.reply({
+		await interaction.editReply({
 			content: `There was an error uploading your dumps. Please contact a developer immediately.\n\n${error}`,
 			ephemeral: true
 		});
@@ -84,7 +88,7 @@ async function uploadNetworkDumpHandler(interaction) {
 		return;
 	}
 
-	await interaction.reply({
+	await interaction.editReply({
 		content: 'Thank you for the submission!',
 		ephemeral: true
 	});
@@ -102,7 +106,7 @@ async function hokakuCafeHandler(interaction) {
 	const dumpFileExtension = path.extname(dump.name.toLowerCase());
 
 	if (dumpFileExtension !== '.pcap' && dumpFileExtension !== '.pcapng') {
-		await interaction.reply({
+		await interaction.editReply({
 			content: `Invalid dump file type. Expected pcap/pcapng, got ${dumpFileExtension}`,
 			ephemeral: true
 		});
@@ -111,7 +115,7 @@ async function hokakuCafeHandler(interaction) {
 	}
 
 	if (dump.name.match(HOKAKU_CAFE_DEFAULT_PCAP_NAME_REGEX)) {
-		await interaction.reply({
+		await interaction.editReply({
 			content: 'Uses default HokakuCafe pcap file name. Please change the name to something more descriptive',
 			ephemeral: true
 		});
@@ -120,7 +124,7 @@ async function hokakuCafeHandler(interaction) {
 	}
 
 	if (!bin.name.match(HOKAKU_CAFE_BIN_NAME_REGEX)) {
-		await interaction.reply({
+		await interaction.editReply({
 			content: 'BIN file appears to be invalid. Name should be in the format "nexServiceToken-1234567890-12345678.bin", where "1234567890" is your NEX username (PID) and "12345678" is the last 8 characters of the title ID for the title',
 			ephemeral: true
 		});
@@ -129,7 +133,7 @@ async function hokakuCafeHandler(interaction) {
 	}
 
 	if (bin.size !== 604) {
-		await interaction.reply({
+		await interaction.editReply({
 			content: `BIN file appears to be invalid. Bad size. Should be 604 bytes, got ${bin.size} bytes`,
 			ephemeral: true
 		});
@@ -157,7 +161,7 @@ async function hokakuCTRHandler(interaction) {
 	const dumpFileExtension = path.extname(dump.name.toLowerCase());
 
 	if (dumpFileExtension !== '.pcap') {
-		await interaction.reply({
+		await interaction.editReply({
 			content: `Invalid dump file type. Expected pcap, got ${dumpFileExtension}`,
 			ephemeral: true
 		});
@@ -166,7 +170,7 @@ async function hokakuCTRHandler(interaction) {
 	}
 
 	if (dump.name.match(HOKAKU_CTR_DEFAULT_PCAP_NAME_REGEX)) {
-		await interaction.reply({
+		await interaction.editReply({
 			content: 'Uses default HokakuCTR pcap file name. Please change the name to something more descriptive',
 			ephemeral: true
 		});
@@ -195,7 +199,7 @@ async function hokakuPCAPHandler(interaction) {
 	const dumpFileExtension = path.extname(dump.name.toLowerCase());
 
 	if (dumpFileExtension !== '.pcap' && dumpFileExtension !== '.pcapng') {
-		await interaction.reply({
+		await interaction.editReply({
 			content: `Invalid dump file type. Expected pcap/pcapng, got ${dumpFileExtension}`,
 			ephemeral: true
 		});
@@ -204,7 +208,7 @@ async function hokakuPCAPHandler(interaction) {
 	}
 
 	if (password.length !== 16) {
-		await interaction.reply({
+		await interaction.editReply({
 			content: 'Invalid password size. Passwords are 16 characters long',
 			ephemeral: true
 		});
@@ -237,7 +241,7 @@ async function proxyHandler(interaction) {
 		dumpFileExtension !== '.chlsx' && // * Charles XML summary
 		dumpFileExtension !== '.saz'      // * Fiddler session
 	) {
-		await interaction.reply({
+		await interaction.editReply({
 			content: `Invalid dump file type. Expected har/chls/chlsj/chlsx/saz, got ${dumpFileExtension}`,
 			ephemeral: true
 		});
@@ -246,7 +250,7 @@ async function proxyHandler(interaction) {
 	}
 
 	if (dump.name.match(MITMPROXY_NINTENDO_DEFAULT_NAME_REGEX)) {
-		await interaction.reply({
+		await interaction.editReply({
 			content: 'Uses default mitmproxy-nintendo capture name. Please change the name to something more descriptive',
 			ephemeral: true
 		});
@@ -270,7 +274,7 @@ async function bossTaskDatabaseWiiUHandler(interaction) {
 	const database = interaction.options.getAttachment('task-db');
 
 	if (database.name !== 'task.db') {
-		await interaction.reply({
+		await interaction.editReply({
 			content: `Invalid task database. Expected task.db, got ${database.name}`,
 			ephemeral: true
 		});
@@ -294,7 +298,7 @@ async function bossTaskDatabase3DSHandler(interaction) {
 	const partition = interaction.options.getAttachment('partition');
 
 	if (!partition.name.startsWith('partition') || partition.name.startsWith('.bin')) {
-		await interaction.reply({
+		await interaction.editReply({
 			content: `Invalid save partition. 3DS BOSS save partition names start with "partition", followed by some letter (usually A), and use the .bin extension. Got ${partition.name}`,
 			ephemeral: true
 		});
