@@ -22,7 +22,7 @@ async function threadCreateHandler(threadChannel) {
 
 	await threadChannel.messages.fetch();
 
-	if (threadChannel.lastMessage.author.bot) {
+	if (threadChannel.lastMessage?.author.bot) {
 		// * Bot already responded
 		return;
 	}
