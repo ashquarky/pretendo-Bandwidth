@@ -23,8 +23,19 @@ async function connect() {
 		stats_people_channel_id TEXT,
 		stats_bots_channel_id TEXT,
 		uploaded_network_dumps_channel_id TEXT,
+		ay_lmao_disabled INTEGER DEFAULT 0 NOT NULL,
 		UNIQUE(guild_id)
 	)`);
+
+	// This adds an ay_lmao_disabled column to the server settings table, if missing.
+	let hasAyLmaoColumn = false;
+	await database.each('SELECT * FROM pragma_table_info(\'server_settings\')', (_err, row) => {
+		if (row.name === 'ay_lmao_disabled') hasAyLmaoColumn = true;
+	});
+
+	if (!hasAyLmaoColumn) {
+		await database.run('ALTER TABLE server_settings ADD ay_lmao_disabled INTEGER DEFAULT 0 NOT NULL;');
+	}
 
 	await database.run(`CREATE TABLE IF NOT EXISTS nlp_disabled (
 		guild_id TEXT,
@@ -84,6 +95,11 @@ async function disableAutomaticHelp(guildId, memberId) {
 
 async function enabledAutomaticHelp(guildId, memberId) {
 	await database.run('DELETE FROM nlp_disabled WHERE guild_id=? AND member_id=?', [ guildId, memberId ]);
+}
+
+async function checkAyLmaoDisabled(guildId) {
+	const result = await database.get('SELECT ay_lmao_disabled FROM server_settings WHERE guild_id=? LIMIT 1', [ guildId ]);
+	return Boolean(result.ay_lmao_disabled);
 }
 
 async function initMemberCooldown(memberId, commandId) {
@@ -188,6 +204,7 @@ module.exports = {
 	checkAutomaticHelpDisabled,
 	disableAutomaticHelp,
 	enabledAutomaticHelp,
+	checkAyLmaoDisabled,
 	initMemberCooldown,
 	updateCommandCooldown,
 	getCommandCooldown,

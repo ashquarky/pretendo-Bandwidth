@@ -14,6 +14,7 @@ const editableOptions = [
 	'stats_people_channel_id',
 	'stats_bots_channel_id',
 	'uploaded_network_dumps_channel_id',
+	'ay_lmao_disabled'
 ];
 
 async function verifyInputtedKey(interaction) {

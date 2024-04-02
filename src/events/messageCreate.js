@@ -4,6 +4,7 @@ const { button: expandErrorButton } = require('../buttons/expand-error');
 const errorCodeUtils = require('../utils/errorCode');
 const { checkNetworkDumpsUploaded } = require('../utils/check-network-dumps-uploaded');
 const database = require('../database');
+const { checkAyLmaoDisabled } = require('../database');
 
 const ayyRegex = /\bay{1,}\b/gi;
 
@@ -19,7 +20,9 @@ async function messageCreateHandler(message) {
 	// * Message was sent in the guild
 	if (!(message.channel instanceof Discord.DMChannel)) {
 		// * ayy => lmaoo
-		if (ayyRegex.test(message.content)) {
+		const isAyLmaoDisabled = await checkAyLmaoDisabled(message.guildId);
+
+		if (!isAyLmaoDisabled && ayyRegex.test(message.content)) {
 			const lmaod = message.content.replaceAll(ayyRegex, (match) => {
 				let newMatch = match.replaceAll('y', 'o').replaceAll('Y', 'O');
 				newMatch = newMatch.replaceAll('a', 'lma').replaceAll('A', 'LMA');
