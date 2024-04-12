@@ -2,7 +2,7 @@ const SupportCode = require('../../../common/support-code');
 
 module.exports = {
 	'0102': new SupportCode('Missing name', 'Likely a Pretendo server issue', 'Missing message.', 'Try double checking your internet connection or wait.', 'https://en-americas-support.nintendo.com/app/answers/detail/a_id/17043/~/error-code%3A-001-0102#:~:text=This%20error%20code%20indicates%20you,a%20poor%20wireless%20network%20environment.'),
-	'0112': new SupportCode('Missing name', 'Connection timeout', 'Unable to connect to the server.\nPlease try again later', 'Verify your wifi is working. If it is working,\nthen this is a serverside error. Please wait and try again later.', 'https://en-americas-support.nintendo.com/app/answers/detail/a_id/14458/~/error-code%3A-001-0112'),
+	'0112': new SupportCode('Missing name', 'Connection timeout', 'Unable to connect to the server.\nPlease try again later', 'Verify your wifi is working. If it is\nworking, then this is a serverside error.\nPlease wait and try again later.', 'https://en-americas-support.nintendo.com/app/answers/detail/a_id/14458/~/error-code%3A-001-0112'),
 	'0302': new SupportCode('Missing name', 'Missing description', 'Unable to connect to the server.\nPlease try again later.\n\nFor help, visit support.nintendo.com', 'Missing fix', 'Missing link'),
 	'0718': new SupportCode('Missing name', 'Full friends list', 'Your friend list is full.\n\nYou cannot add any\nadditional friends', 'Missing fix', 'Missing link'),
 	'0720': new SupportCode('Missing name', 'Missing description', 'An error has occurred.\nTurn off the power and try again.\n\nFor help, visit support.nintendo.com', 'Missing fix', 'Missing link'),
